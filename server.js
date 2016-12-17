@@ -5,12 +5,12 @@ const morgan = require('morgan');
 const app = express();
 const router = require('./router');
 const mongoose = require('mongoose');
-const cors = require('cors'); 
+const cors = require('cors');
 
 /**
  * DATABASE
  */
- mongoose.connect('localhost:27017/myDatabase');
+ mongoose.connect('localhost:27017/rolo');
 
 
 /**
@@ -24,7 +24,12 @@ console.log('serving on: %s', port);
 /**
  * MIDDLEWARE
  */
+app.set('view engine', 'hbs');
+app.use(express.static('public'))
 app.use(morgan('combined'));
 app.use(cors());
-app.use(bodyParser.json({type: '*/*'}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 router(app);
