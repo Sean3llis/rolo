@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-  entry: './src/app.js',
+  entry: './src/index.js',
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'app.js',
@@ -30,7 +30,8 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
-    contentBase: './',
-    inline: true
+    contentBase: './public',
+    port: 4000,
+    progress: true
   },
 };
