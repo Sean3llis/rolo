@@ -3,23 +3,47 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 class Header extends Component {
+  defaultNav() {
+    return (
+      <ul className="nav navbar-nav">
+        <Link to="/" className="navbar-brand">Boom</Link>
+        <li>
+          <Link to="/signin">Sign In</Link>
+        </li>
+        <li>
+          <Link to="/signup">Sign Up</Link>
+        </li>
+      </ul>
+    );
+  }
+
+  authNav() {
+    return (
+      <ul className="nav navbar-nav">
+        <Link to="/" className="navbar-brand">Boom</Link>
+        <li>
+          <Link to="/signout">Sign Out</Link>
+        </li>
+      </ul>
+    );
+  }
+
+  nav() {
+    return (this.props.authenticated)
+      ? this.authNav()
+      : this.defaultNav();
+  }
+
   render() {
-    console.log('this.props.authenticated ~~>', this.props.authenticated);
     return (
       <nav className="navbar navbar-default">
-        <ul className="nav navbar-nav">
-          <Link to="/" className="navbar-brand">Boom</Link>
-          <li className="nav-item">adlskfj</li>
-          <li className="nav-item">adlskfj</li>
-          <li className="nav-item">adlskfj</li>
-        </ul>
+        {this.nav()}
       </nav>
     );
   }
 }
 
 function mapStateToProps(state = {}) {
-  console.log('state ~~>', state);
   return { authenticated: state.auth.authenticated };
 }
 

@@ -1,7 +1,6 @@
 import * as actions from '../actions/types';
 
 export default function(state = {}, action) {
-  console.log(action.type);
   switch (action.type) {
     case actions.AUTH_USER:
       return { ...state, authenticated: true };

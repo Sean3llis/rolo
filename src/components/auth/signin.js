@@ -39,9 +39,7 @@ class SignIn extends Component {
           {this.alert()}
         </fieldset>
 
-        <fieldset className="form-group">
-          <button action="submit" className="btn btn-primary">Sign In</button>
-        </fieldset>
+        <button action="submit" className="btn btn-primary">Sign In</button>
 
       </form>
       </div>
