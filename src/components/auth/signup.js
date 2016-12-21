@@ -3,26 +3,49 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
+import AuthError from './error';
+
 class SignUp extends Component {
+  localSubmit(formProps) {
+    console.log('formProps ~~>', formProps);
+    this.props.signUpUser(formProps);
+  }
+
+  renderInput(field) {
+    const { input, type, meta: { touched, error }} = field;
+    return (
+      <div>
+        <input className="form-control" {...input} type={type} />
+        {touched && error && (
+          <div className="text-danger">{error}</div>
+        )}
+      </div>
+    );
+  }
 
   render() {
-    const { handleSubmit, fields: { email, password }} = this.props;
+    console.log('this.props.errorMessage ~~>', this.props.errorMessage);
+    const { handleSubmit, fields: { email, password, passwordConfirm }} = this.props;
     return (
       <div className="well">
-      <form>
+      <form onSubmit={handleSubmit(this.localSubmit.bind(this))}>
         <fieldset className="form-group">
           <label htmlFor="signup">Email:</label>
-          <Field className="form-control" name="email" component="input" type="text"/>
+          <Field name="email" component={this.renderInput} type="text"/>
         </fieldset>
 
         <fieldset className="form-group">
           <label htmlFor="signup">Password:</label>
-          <Field className="form-control" name="email" component="input" type="password"/>
+          <Field  name="password" component={this.renderInput} type="password"/>
         </fieldset>
 
         <fieldset className="form-group">
           <label htmlFor="signup">Confirm Password:</label>
-          <Field className="form-control" name="email" component="input" type="password"/>
+          <Field className="form-control" name="passwordConfirm" component={this.renderInput} type="password"/>
+        </fieldset>
+
+        <fieldset className="form-group">
+          <AuthError error={this.props.errorMessage} />
         </fieldset>
         <button action="submit" className="btn btn-primary">Sign Up</button>
 
@@ -32,11 +55,23 @@ class SignUp extends Component {
   }
 }
 
+
+
 function mapStateToProps(state = {}) {
-  return state;
+  return { errorMessage: state.auth.errorMessage };
+}
+
+function validate(formProps) {
+  console.log('formProps ~~>', formProps);
+  const errors = {};
+  if (formProps.password !== formProps.passwordConfirm) {
+    errors.password = 'Missmatch'
+  }
+  return errors;
 }
 
 export default reduxForm({
   form: 'signup',
-  fields: ['email', 'password', 'passwordConfirm']
+  fields: ['email', 'password', 'passwordConfirm'],
+  validate: validate
 })(connect(mapStateToProps, actions)(SignUp));

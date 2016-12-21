@@ -3,23 +3,15 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
+import AuthError from './error';
+
 class SignIn extends Component {
   handleFormSubmit({ email, password }) {
     this.props.signInUser({ email, password });
   }
 
-  alert() {
-    if (this.props.errorMessage) {
-      return (
-        <div className="alert alert-danger">
-          <h5>Almost!</h5>
-          <strong>{this.props.errorMessage.toString()}</strong>
-        </div>
-      );
-    }
-  }
-
   render() {
+    console.log('this.props ~~>', this.props);
     const { handleSubmit, fields: { email, password }} = this.props;
     return (
       <div className="well">
@@ -36,7 +28,7 @@ class SignIn extends Component {
         </fieldset>
 
         <fieldset className="form-group">
-          {this.alert()}
+          <AuthError error={this.props.errorMessage} />
         </fieldset>
 
         <button action="submit" className="btn btn-primary">Sign In</button>
