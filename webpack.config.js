@@ -30,7 +30,7 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
-    contentBase: './public',
+    contentBase: path.join(__dirname, 'public'),
     port: 4000,
     progress: true
   },
