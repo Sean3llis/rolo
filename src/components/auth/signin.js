@@ -11,7 +11,6 @@ class SignIn extends Component {
   }
 
   render() {
-    console.log('this.props ~~>', this.props);
     const { handleSubmit, fields: { email, password }} = this.props;
     return (
       <div className="well">

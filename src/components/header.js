@@ -6,13 +6,9 @@ class Header extends Component {
   defaultNav() {
     return (
       <ul className="nav navbar-nav">
-        <Link to="/" className="navbar-brand">Boom</Link>
-        <li>
-          <Link to="/signin">Sign In</Link>
-        </li>
-        <li>
-          <Link to="/signup">Sign Up</Link>
-        </li>
+        <Link to="/" className="navbar-brand">ROLO</Link>
+        <li><Link to="/signin">Sign In</Link></li>
+        <li><Link to="/signup">Sign Up</Link></li>
       </ul>
     );
   }
@@ -20,10 +16,10 @@ class Header extends Component {
   authNav() {
     return (
       <ul className="nav navbar-nav">
-        <Link to="/" className="navbar-brand">Boom</Link>
-        <li>
-          <Link to="/signout">Sign Out</Link>
-        </li>
+        <Link to="/" className="navbar-brand">ROLO</Link>
+        <li><Link to="/resume">View Resume</Link></li>
+        <li><Link to="/templates">Templates</Link></li>
+        <li><Link to="/signout">Sign Out</Link></li>
       </ul>
     );
   }

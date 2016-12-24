@@ -10,7 +10,7 @@ export function signInUser({ email, password }) {
       .then(res => {
         dispatch({ type: actions.AUTH_USER });
         localStorage.setItem('token', res.data.token)
-        browserHistory.push('/feature');
+        browserHistory.push('/resume');
       })
       .catch(error => {
         dispatch({
@@ -27,7 +27,7 @@ export function signUpUser({ email, password }) {
       .then(response => {
         dispatch({ type: actions.AUTH_USER });
         localStorage.setItem('token', response.data.token);
-        browserHistory.push('/feature');
+        browserHistory.push('/resume');
       })
       .catch(error => {
         console.log('error ~~>', error);
@@ -37,4 +37,11 @@ export function signUpUser({ email, password }) {
         });
       });
   }
+}
+
+export function signOutUser() {
+  localStorage.removeItem('token');
+  return {
+    type: actions.UNAUTH_USER
+  };
 }

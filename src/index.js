@@ -11,6 +11,10 @@ import reducer from './reducers';
 import App from './components/app';
 import SignIn from './components/auth/signin';
 import SignUp from './components/auth/signup';
+import SignOut from './components/auth/signout';
+import TemplateChooser from './components/templates/chooser';
+import Resume from './components/resume/resume';
+import ResumeEditor from './components/resume/editor';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
@@ -20,7 +24,10 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <Route path="signin" component={SignIn}></Route>
         <Route path="signup" component={SignUp}></Route>
-        <Route path="feature" component={App}></Route>
+        <Route path="signout" component={SignOut}></Route>
+        <Route path="templates" component={TemplateChooser}></Route>
+        <Route path="resume" component={Resume}></Route>
+        <Route path="resume/edit" component={ResumeEditor}></Route>
       </Route>
     </Router>
   </Provider>
