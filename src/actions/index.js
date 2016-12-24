@@ -45,3 +45,11 @@ export function signOutUser() {
     type: actions.UNAUTH_USER
   };
 }
+
+export function setTemplate(templateName) {
+  console.log('set template action creator');
+  return {
+    type: actions.SET_TEMPLATE,
+    payload: templateName
+  };
+}

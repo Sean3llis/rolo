@@ -20,6 +20,7 @@ class Header extends Component {
         <li><Link to="/resume">View Resume</Link></li>
         <li><Link to="/templates">Templates</Link></li>
         <li><Link to="/signout">Sign Out</Link></li>
+        <li><Link to="/settings"><i className="fa fa-gear"></i></Link></li>
       </ul>
     );
   }

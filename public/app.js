@@ -77,6 +77,10 @@ var ROLO =
 	
 	var _app2 = _interopRequireDefault(_app);
 	
+	var _wall = __webpack_require__(514);
+	
+	var _wall2 = _interopRequireDefault(_wall);
+	
 	var _signin = __webpack_require__(499);
 	
 	var _signin2 = _interopRequireDefault(_signin);
@@ -117,9 +121,9 @@ var ROLO =
 	      _react2.default.createElement(_reactRouter.Route, { path: 'signin', component: _signin2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _signup2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'signout', component: _signout2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: 'templates', component: _chooser2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: 'templates', component: (0, _wall2.default)(_chooser2.default) }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'resume', component: _resume2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: 'resume/edit', component: _editor2.default })
+	      _react2.default.createElement(_reactRouter.Route, { path: 'resume/edit', component: (0, _wall2.default)(_editor2.default) })
 	    )
 	  )
 	), document.getElementById('root'));
@@ -30404,15 +30408,20 @@ var ROLO =
 	
 	var _reduxForm = __webpack_require__(296);
 	
-	var _authReducer = __webpack_require__(495);
+	var _reducer = __webpack_require__(512);
 	
-	var _authReducer2 = _interopRequireDefault(_authReducer);
+	var _reducer2 = _interopRequireDefault(_reducer);
+	
+	var _reducer3 = __webpack_require__(513);
+	
+	var _reducer4 = _interopRequireDefault(_reducer3);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var rootReducer = (0, _redux.combineReducers)({
 	  form: _reduxForm.reducer,
-	  auth: _authReducer2.default
+	  auth: _reducer2.default,
+	  templates: _reducer4.default
 	});
 	
 	exports.default = rootReducer;
@@ -41331,40 +41340,7 @@ var ROLO =
 	exports.default = propTypes;
 
 /***/ },
-/* 495 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports.default = function () {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	  var action = arguments[1];
-	
-	  console.log('action.type ~~>', action.type);
-	  switch (action.type) {
-	    case actions.AUTH_USER:
-	      return Object.assign({}, state, { errorMessage: '', authenticated: true });
-	    case actions.UNAUTH_USER:
-	      return Object.assign({}, state, { errorMessage: '', authenticated: false });
-	    case actions.AUTH_ERROR:
-	      return Object.assign({}, state, { errorMessage: action.payload });
-	    default:
-	      if (localStorage.getItem('token')) return Object.assign({}, state, { authenticated: true });
-	  }
-	  return state;
-	};
-	
-	var _types = __webpack_require__(496);
-	
-	var actions = _interopRequireWildcard(_types);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-/***/ },
+/* 495 */,
 /* 496 */
 /***/ function(module, exports) {
 
@@ -41376,6 +41352,8 @@ var ROLO =
 	var AUTH_USER = exports.AUTH_USER = 'AUTH_USER';
 	var UNAUTH_USER = exports.UNAUTH_USER = 'UNAUTH_USER';
 	var AUTH_ERROR = exports.AUTH_ERROR = 'AUTH_ERROR';
+	
+	var SET_TEMPLATE = exports.SET_TEMPLATE = 'SET_TEMPLATE';
 
 /***/ },
 /* 497 */
@@ -41536,6 +41514,15 @@ var ROLO =
 	            _reactRouter.Link,
 	            { to: '/signout' },
 	            'Sign Out'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'li',
+	          null,
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: '/settings' },
+	            _react2.default.createElement('i', { className: 'fa fa-gear' })
 	          )
 	        )
 	      );
@@ -41698,6 +41685,7 @@ var ROLO =
 	exports.signInUser = signInUser;
 	exports.signUpUser = signUpUser;
 	exports.signOutUser = signOutUser;
+	exports.setTemplate = setTemplate;
 	
 	var _axios = __webpack_require__(270);
 	
@@ -41756,6 +41744,14 @@ var ROLO =
 	  localStorage.removeItem('token');
 	  return {
 	    type: actions.UNAUTH_USER
+	  };
+	}
+	
+	function setTemplate(templateName) {
+	  console.log('set template action creator');
+	  return {
+	    type: actions.SET_TEMPLATE,
+	    payload: templateName
 	  };
 	}
 
@@ -42184,6 +42180,12 @@ var ROLO =
 	
 	var _reactRedux = __webpack_require__(178);
 	
+	var _actions = __webpack_require__(500);
+	
+	var actions = _interopRequireWildcard(_actions);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42191,6 +42193,22 @@ var ROLO =
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var templateStyles = {
+	  width: '200px',
+	  height: '200px',
+	  textAlign: 'center',
+	  display: 'inline-block',
+	  marginRight: '15px'
+	};
+	
+	var templates = [{
+	  name: 'classic',
+	  prettyName: 'Classic'
+	}, {
+	  name: 'creative',
+	  prettyName: 'Creative'
+	}];
 	
 	var TemplateChooser = function (_Component) {
 	  _inherits(TemplateChooser, _Component);
@@ -42202,12 +42220,52 @@ var ROLO =
 	  }
 	
 	  _createClass(TemplateChooser, [{
+	    key: 'templateSelected',
+	    value: function templateSelected(templateName) {
+	      this.props.setTemplate(templateName);
+	    }
+	  }, {
+	    key: 'templateTile',
+	    value: function templateTile(config, key) {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        {
+	          className: 'tile',
+	          style: templateStyles,
+	          key: key,
+	          onClick: function onClick(e) {
+	            return _this2.templateSelected(config.name);
+	          } },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'well' },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            config.prettyName
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'stampTiles',
+	    value: function stampTiles() {
+	      var tiles = [];
+	      for (var i = 0; i < templates.length; i++) {
+	        var currentTemplate = templates[i];
+	        tiles.push(this.templateTile(currentTemplate, i));
+	      }
+	      return tiles;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        'Template Chooser'
+	        { id: 'template-chooser' },
+	        this.stampTiles()
 	      );
 	    }
 	  }]);
@@ -42215,7 +42273,7 @@ var ROLO =
 	  return TemplateChooser;
 	}(_react.Component);
 	
-	exports.default = TemplateChooser;
+	exports.default = (0, _reactRedux.connect)(null, actions)(TemplateChooser);
 
 /***/ },
 /* 509 */
@@ -42348,6 +42406,138 @@ var ROLO =
 	}(_react.Component);
 	
 	exports.default = ClassicTemplate;
+
+/***/ },
+/* 510 */,
+/* 511 */,
+/* 512 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function () {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var action = arguments[1];
+	
+	  console.log('action.type ~~>', action.type);
+	  switch (action.type) {
+	    case actions.AUTH_USER:
+	      return Object.assign({}, state, { errorMessage: '', authenticated: true });
+	    case actions.UNAUTH_USER:
+	      return Object.assign({}, state, { errorMessage: '', authenticated: false });
+	    case actions.AUTH_ERROR:
+	      return Object.assign({}, state, { errorMessage: action.payload });
+	    default:
+	      if (localStorage.getItem('token')) return Object.assign({}, state, { authenticated: true });
+	  }
+	  return state;
+	};
+	
+	var _types = __webpack_require__(496);
+	
+	var actions = _interopRequireWildcard(_types);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/***/ },
+/* 513 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function () {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case actions.SET_TEMPLATE:
+	      console.log('action.payload ~~>', action.payload);
+	      return Object.assign({}, state, { errorMessage: '', authenticated: true });
+	  }
+	  return state;
+	};
+	
+	var _types = __webpack_require__(496);
+	
+	var actions = _interopRequireWildcard(_types);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/***/ },
+/* 514 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	exports.default = function (ComposedComponent) {
+	  var Authentication = function (_Component) {
+	    _inherits(Authentication, _Component);
+	
+	    function Authentication() {
+	      _classCallCheck(this, Authentication);
+	
+	      return _possibleConstructorReturn(this, (Authentication.__proto__ || Object.getPrototypeOf(Authentication)).apply(this, arguments));
+	    }
+	
+	    _createClass(Authentication, [{
+	      key: 'componentWillMount',
+	      value: function componentWillMount() {
+	        if (!this.props.authenticated) {
+	          this.context.router.push('/');
+	        }
+	      }
+	    }, {
+	      key: 'componentWillUpdate',
+	      value: function componentWillUpdate() {
+	        if (!this.nextProps.authenticated) {
+	          this.context.router.push('/');
+	        }
+	      }
+	    }, {
+	      key: 'render',
+	      value: function render() {
+	        return _react2.default.createElement(ComposedComponent, this.props);
+	      }
+	    }]);
+	
+	    return Authentication;
+	  }(_react.Component);
+	
+	  function mapStateToProps(state) {
+	    console.log('state ~~>', state);
+	    return { authenticated: state.auth.authenticated };
+	  }
+	
+	  return (0, _reactRedux.connect)(mapStateToProps)(Authentication);
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /***/ }
 /******/ ]);

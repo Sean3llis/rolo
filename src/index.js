@@ -9,6 +9,7 @@ import axios from 'axios';
 import reducer from './reducers';
 
 import App from './components/app';
+import AuthWall from './components/auth/wall';
 import SignIn from './components/auth/signin';
 import SignUp from './components/auth/signup';
 import SignOut from './components/auth/signout';
@@ -25,9 +26,9 @@ ReactDOM.render(
         <Route path="signin" component={SignIn}></Route>
         <Route path="signup" component={SignUp}></Route>
         <Route path="signout" component={SignOut}></Route>
-        <Route path="templates" component={TemplateChooser}></Route>
+        <Route path="templates" component={AuthWall(TemplateChooser)}></Route>
         <Route path="resume" component={Resume}></Route>
-        <Route path="resume/edit" component={ResumeEditor}></Route>
+        <Route path="resume/edit" component={AuthWall(ResumeEditor)}></Route>
       </Route>
     </Router>
   </Provider>
