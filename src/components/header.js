@@ -18,6 +18,7 @@ class Header extends Component {
       <ul className="nav navbar-nav">
         <Link to="/" className="navbar-brand">ROLO</Link>
         <li><Link to="/resume">View Resume</Link></li>
+        <li><Link to="/resume/edit">Edit Resume</Link></li>
         <li><Link to="/templates">Templates</Link></li>
         <li><Link to="/signout">Sign Out</Link></li>
         <li><Link to="/settings"><i className="fa fa-gear"></i></Link></li>

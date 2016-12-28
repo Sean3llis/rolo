@@ -69,6 +69,8 @@ var ROLO =
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
+	var _types = __webpack_require__(496);
+	
 	var _reducers = __webpack_require__(295);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
@@ -93,6 +95,10 @@ var ROLO =
 	
 	var _signout2 = _interopRequireDefault(_signout);
 	
+	var _welcome = __webpack_require__(515);
+	
+	var _welcome2 = _interopRequireDefault(_welcome);
+	
 	var _chooser = __webpack_require__(508);
 	
 	var _chooser2 = _interopRequireDefault(_chooser);
@@ -107,17 +113,29 @@ var ROLO =
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	/**
+	 * REDUX SETUP
+	 */
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
+	
+	/**
+	 * COMPONENTS
+	 */
+	
+	var store = createStoreWithMiddleware(_reducers2.default);
+	var token = localStorage.getItem('token');
+	if (token) store.dispatch({ type: _types.AUTH_USER });
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
-	  { store: createStoreWithMiddleware(_reducers2.default) },
+	  { store: store },
 	  _react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
 	    _react2.default.createElement(
 	      _reactRouter.Route,
 	      { path: '/', component: _app2.default },
+	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _welcome2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'signin', component: _signin2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _signup2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'signout', component: _signout2.default }),
@@ -30412,7 +30430,7 @@ var ROLO =
 	
 	var _reducer2 = _interopRequireDefault(_reducer);
 	
-	var _reducer3 = __webpack_require__(513);
+	var _reducer3 = __webpack_require__(516);
 	
 	var _reducer4 = _interopRequireDefault(_reducer3);
 	
@@ -30421,7 +30439,7 @@ var ROLO =
 	var rootReducer = (0, _redux.combineReducers)({
 	  form: _reduxForm.reducer,
 	  auth: _reducer2.default,
-	  templates: _reducer4.default
+	  resume: _reducer4.default
 	});
 	
 	exports.default = rootReducer;
@@ -41353,6 +41371,8 @@ var ROLO =
 	var UNAUTH_USER = exports.UNAUTH_USER = 'UNAUTH_USER';
 	var AUTH_ERROR = exports.AUTH_ERROR = 'AUTH_ERROR';
 	
+	var FETCH_MESSAGE = exports.FETCH_MESSAGE = 'FETCH_MESSAGE';
+	
 	var SET_TEMPLATE = exports.SET_TEMPLATE = 'SET_TEMPLATE';
 
 /***/ },
@@ -41496,6 +41516,15 @@ var ROLO =
 	            _reactRouter.Link,
 	            { to: '/resume' },
 	            'View Resume'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'li',
+	          null,
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: '/resume/edit' },
+	            'Edit Resume'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -41686,6 +41715,8 @@ var ROLO =
 	exports.signUpUser = signUpUser;
 	exports.signOutUser = signOutUser;
 	exports.setTemplate = setTemplate;
+	exports.updateResume = updateResume;
+	exports.sendMessage = sendMessage;
 	
 	var _axios = __webpack_require__(270);
 	
@@ -41754,12 +41785,32 @@ var ROLO =
 	    payload: templateName
 	  };
 	}
+	
+	function updateResume(resumeData) {
+	  return {
+	    type: actions.UPDATE_RESUME,
+	    payload: resumeData
+	  };
+	}
+	
+	function sendMessage() {
+	  return function (dispatch) {
+	    _axios2.default.get(ROOT_URL, {
+	      headers: { authorization: localStorage.getItem('token') }
+	    }).then(function (response) {
+	      dispatch({
+	        type: actions.FETCH_MESSAGE,
+	        payload: response
+	      });
+	    });
+	  };
+	}
 
 /***/ },
 /* 501 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -41772,24 +41823,23 @@ var ROLO =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = function (props) {
-	  console.log('errorjs props ~~>', props);
 	  if (props.error) {
 	    return _react2.default.createElement(
-	      'div',
-	      { className: 'alert alert-danger' },
+	      "div",
+	      { className: "alert alert-danger" },
 	      _react2.default.createElement(
-	        'h5',
+	        "h5",
 	        null,
-	        'Almost!'
+	        "Almost!"
 	      ),
 	      _react2.default.createElement(
-	        'strong',
+	        "strong",
 	        null,
 	        props.error.toString()
 	      )
 	    );
 	  } else {
-	    return _react2.default.createElement('span', null);
+	    return _react2.default.createElement("span", null);
 	  }
 	};
 
@@ -42004,7 +42054,17 @@ var ROLO =
 	  _createClass(Resume, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(_classic2.default, { data: _mockResume2.default });
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/resume/edit' },
+	          'Edit'
+	        ),
+	        _react2.default.createElement(_classic2.default, { data: _mockResume2.default }),
+	        ';'
+	      );
 	    }
 	  }]);
 	
@@ -42029,6 +42089,20 @@ var ROLO =
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reduxForm = __webpack_require__(296);
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _actions = __webpack_require__(500);
+	
+	var actions = _interopRequireWildcard(_actions);
+	
+	var _error = __webpack_require__(501);
+	
+	var _error2 = _interopRequireDefault(_error);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42050,12 +42124,75 @@ var ROLO =
 	  }
 	
 	  _createClass(ResumeEditor, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.sendMessage();
+	    }
+	  }, {
+	    key: 'handleFormSubmit',
+	    value: function handleFormSubmit(payload) {
+	      this.props.updateUser(payload);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _props = this.props,
+	          handleSubmit = _props.handleSubmit,
+	          _props$fields = _props.fields,
+	          name = _props$fields.name,
+	          blurb = _props$fields.blurb;
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'Edit Your Resume Below!'
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          'Edit Your Resume Below!'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          'Message: '
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'form',
+	            { onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+	            _react2.default.createElement(
+	              'fieldset',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'label',
+	                { htmlFor: 'name' },
+	                'Name:'
+	              ),
+	              _react2.default.createElement(_reduxForm.Field, { className: 'form-control', name: 'name', component: 'input', type: 'text' })
+	            ),
+	            _react2.default.createElement(
+	              'fieldset',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'label',
+	                { htmlFor: 'blurb' },
+	                'Blurb:'
+	              ),
+	              _react2.default.createElement(_reduxForm.Field, { className: 'form-control', name: 'blurb', component: 'input', type: 'textarea' })
+	            ),
+	            _react2.default.createElement(
+	              'fieldset',
+	              { className: 'form-group' },
+	              _react2.default.createElement(_error2.default, { error: this.props.errorMessage })
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { action: 'submit', className: 'btn btn-primary' },
+	              'Save'
+	            )
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -42063,7 +42200,16 @@ var ROLO =
 	  return ResumeEditor;
 	}(_react.Component);
 	
-	exports.default = ResumeEditor;
+	function mapStateToProps() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	
+	  return { message: state.auth.message };
+	}
+	
+	exports.default = (0, _reduxForm.reduxForm)({
+	  form: 'signin',
+	  fields: ['name', 'blurb']
+	})((0, _reactRedux.connect)(mapStateToProps, actions)(ResumeEditor));
 
 /***/ },
 /* 506 */
@@ -42229,10 +42375,12 @@ var ROLO =
 	    value: function templateTile(config, key) {
 	      var _this2 = this;
 	
+	      var classes = ['tile'];
+	      if (config.name === this.props.selectedTemplate) classes.push('active');
 	      return _react2.default.createElement(
 	        'div',
 	        {
-	          className: 'tile',
+	          className: classes.join(' '),
 	          style: templateStyles,
 	          key: key,
 	          onClick: function onClick(e) {
@@ -42262,6 +42410,8 @@ var ROLO =
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log('this.props ~~>', this.props);
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'template-chooser' },
@@ -42273,7 +42423,13 @@ var ROLO =
 	  return TemplateChooser;
 	}(_react.Component);
 	
-	exports.default = (0, _reactRedux.connect)(null, actions)(TemplateChooser);
+	function mapStateToProps() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	
+	  return { selectedTemplate: state.resume.selectedTemplate };
+	}
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(TemplateChooser);
 
 /***/ },
 /* 509 */
@@ -42423,7 +42579,6 @@ var ROLO =
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	  var action = arguments[1];
 	
-	  console.log('action.type ~~>', action.type);
 	  switch (action.type) {
 	    case actions.AUTH_USER:
 	      return Object.assign({}, state, { errorMessage: '', authenticated: true });
@@ -42431,6 +42586,8 @@ var ROLO =
 	      return Object.assign({}, state, { errorMessage: '', authenticated: false });
 	    case actions.AUTH_ERROR:
 	      return Object.assign({}, state, { errorMessage: action.payload });
+	    case actions.FETCH_MESSAGE:
+	      return Object.assign({}, state, { message: action.payload });
 	    default:
 	      if (localStorage.getItem('token')) return Object.assign({}, state, { authenticated: true });
 	  }
@@ -42444,34 +42601,7 @@ var ROLO =
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 /***/ },
-/* 513 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports.default = function () {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	  var action = arguments[1];
-	
-	  switch (action.type) {
-	    case actions.SET_TEMPLATE:
-	      console.log('action.payload ~~>', action.payload);
-	      return Object.assign({}, state, { errorMessage: '', authenticated: true });
-	  }
-	  return state;
-	};
-	
-	var _types = __webpack_require__(496);
-	
-	var actions = _interopRequireWildcard(_types);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-/***/ },
+/* 513 */,
 /* 514 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -42518,7 +42648,6 @@ var ROLO =
 	  }(_react.Component);
 	
 	  function mapStateToProps(state) {
-	    console.log('state ~~>', state);
 	    return { authenticated: state.auth.authenticated };
 	  }
 	
@@ -42538,6 +42667,59 @@ var ROLO =
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/***/ },
+/* 515 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function () {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    'Welcome!'
+	  );
+	};
+
+/***/ },
+/* 516 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function () {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case actions.SET_TEMPLATE:
+	      return Object.assign({}, state, { selectedTemplate: action.payload });
+	    case actions.UPDATE_RESUME:
+	      return Object.assign({}, state, { selectedTemplate: action.payload });
+	  }
+	  return state;
+	};
+	
+	var _types = __webpack_require__(496);
+	
+	var actions = _interopRequireWildcard(_types);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 /***/ }
 /******/ ]);

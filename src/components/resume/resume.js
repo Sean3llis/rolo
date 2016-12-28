@@ -13,7 +13,12 @@ class Resume extends Component {
   }
 
   render() {
-    return <Classic data={resumeData} />;
+    return (
+      <div>
+        <Link to="/resume/edit">Edit</Link>
+        <Classic data={resumeData} />;
+      </div>
+    );
   }
 }
 

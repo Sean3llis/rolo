@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default props => {
-  console.log('errorjs props ~~>', props);
   if (props.error) {
     return (
       <div className="alert alert-danger">

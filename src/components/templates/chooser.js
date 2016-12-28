@@ -28,9 +28,11 @@ class TemplateChooser extends Component {
   }
 
   templateTile(config, key) {
+    const classes = ['tile'];
+    if (config.name === this.props.selectedTemplate) classes.push('active');
     return (
       <div
-        className="tile"
+        className={classes.join(' ')}
         style={templateStyles}
         key={key}
         onClick={e => this.templateSelected(config.name)}>
@@ -51,6 +53,8 @@ class TemplateChooser extends Component {
   }
 
   render() {
+    console.log('this.props ~~>', this.props);
+
     return (
       <div id="template-chooser">
         {this.stampTiles()}
@@ -59,4 +63,8 @@ class TemplateChooser extends Component {
   }
 }
 
-export default connect(null, actions)(TemplateChooser);
+function mapStateToProps(state = {}) {
+  return { selectedTemplate: state.resume.selectedTemplate }
+}
+
+export default connect(mapStateToProps, actions)(TemplateChooser);

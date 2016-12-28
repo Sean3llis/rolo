@@ -53,3 +53,24 @@ export function setTemplate(templateName) {
     payload: templateName
   };
 }
+
+export function updateResume(resumeData) {
+  return {
+    type: actions.UPDATE_RESUME,
+    payload: resumeData
+  }
+}
+
+export function sendMessage() {
+  return function(dispatch) {
+    axios.get(ROOT_URL, {
+      headers: { authorization: localStorage.getItem('token')}
+    })
+    .then(response => {
+      dispatch({
+        type: actions.FETCH_MESSAGE,
+        payload: response
+      })
+    });
+  }
+}
