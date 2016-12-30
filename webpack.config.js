@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
@@ -9,7 +9,7 @@ module.exports = {
     libraryTarget: 'var',
     library: 'ROLO'
   },
-  resolve: ['.js', '.scss', '.hbs'],
+  resolve: ['.js', '.hbs'],
   module: {
     loaders: [
       {
@@ -18,13 +18,18 @@ module.exports = {
         query: { presets: ['react', 'es2015'] }
       },
       {
-        test: /\.hbs/,
+        test: /\.hbs$/,
         loader: 'handlebars-loader',
       },
-      {
-        test: /\.scss$/,
-        loaders: ["style", "css", "sass"]
-      }
+      // {
+      //   test: /\.scss$/,
+      //   loaders: [
+      //     "style",
+      //     "css?sourcemaps",
+      //     "postcss?sourcemaps",
+      //     "sass?sourcemaps"
+      //   ]
+      // }
     ]
   },
   devtool: 'source-map',

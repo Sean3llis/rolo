@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+
 import * as actions from '../../actions';
 
 import AuthError from './error';
 
 class SignUp extends Component {
   localSubmit(formProps) {
-    console.log('formProps ~~>', formProps);
     this.props.signUpUser(formProps);
   }
 
@@ -24,7 +24,6 @@ class SignUp extends Component {
   }
 
   render() {
-    console.log('this.props.errorMessage ~~>', this.props.errorMessage);
     const { handleSubmit, fields: { email, password, passwordConfirm }} = this.props;
     return (
       <div className="well">
@@ -55,8 +54,6 @@ class SignUp extends Component {
   }
 }
 
-
-
 function mapStateToProps(state = {}) {
   return { errorMessage: state.auth.errorMessage };
 }
@@ -70,7 +67,7 @@ function validate(formProps) {
   return errors;
 }
 
-export default reduxForm({
+module.exports = reduxForm({
   form: 'signup',
   fields: ['email', 'password', 'passwordConfirm'],
   validate: validate

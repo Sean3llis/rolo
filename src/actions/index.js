@@ -30,7 +30,7 @@ export function signUpUser({ email, password }) {
         browserHistory.push('/resume');
       })
       .catch(error => {
-        console.log('error ~~>', error);
+        // console.log('error ~~>', error);
         dispatch({
           type: actions.AUTH_ERROR,
           payload: error.response.data.error

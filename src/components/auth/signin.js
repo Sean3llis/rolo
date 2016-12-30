@@ -13,24 +13,24 @@ class SignIn extends Component {
   render() {
     const { handleSubmit, fields: { email, password }} = this.props;
     return (
-      <div className="well">
+      <div className="contain">
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
-        <fieldset className="form-group">
+        <fieldset>
           <label htmlFor="">Email:</label>
-          <Field className="form-control" name="email" component="input" type="text"/>
+          <Field name="email" component="input" type="text"/>
         </fieldset>
 
-        <fieldset className="form-group">
+        <fieldset>
           <label htmlFor="">Password:</label>
-          <Field className="form-control" name="password" component="input" type="password"/>
+          <Field name="password" component="input" type="password"/>
         </fieldset>
 
-        <fieldset className="form-group">
+        <fieldset>
           <AuthError error={this.props.errorMessage} />
         </fieldset>
 
-        <button action="submit" className="btn btn-primary">Sign In</button>
+        <button action="submit">Sign In</button>
 
       </form>
       </div>

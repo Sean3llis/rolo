@@ -18,7 +18,7 @@ class ResumeEditor extends Component {
   }
 
   handleFormSubmit(payload) {
-    this.props.updateUser(payload);
+    this.props.updateResume(payload);
   }
 
   render() {
