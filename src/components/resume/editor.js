@@ -14,17 +14,18 @@ class ResumeEditor extends Component {
   }
 
   componentWillMount() {
-    this.props.sendMessage();
+    // this.props.authenticateUser();
   }
 
-  handleFormSubmit(payload) {
-    this.props.updateResume(payload);
+  handleFormSubmit(formData) {
+    console.log('submitted update');
+    this.props.updateUser(formData, this.props.currentUser._id);
   }
 
   render() {
     const { handleSubmit, fields: { name, blurb }} = this.props;
     return (
-      <div>
+      <div id="editor" className="contain">
         <div>Edit Your Resume Below!</div>
         <div>Message: </div>
         <div>
@@ -54,7 +55,10 @@ class ResumeEditor extends Component {
 }
 
 function mapStateToProps(state = {}) {
-  return { message: state.auth.message };
+  return {
+    message: state.auth.message,
+    currentUser: state.auth.currentUser
+  };
 }
 
 export default reduxForm({

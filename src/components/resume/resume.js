@@ -33,7 +33,7 @@ class Resume extends Component {
           <i className="fa fa-pencil"></i>
           Edit
         </Link> */}
-        <Classic data={resumeData} />;
+        <Classic data={resumeData} />
       </div>
     );
   }

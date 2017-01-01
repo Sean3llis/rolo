@@ -5,27 +5,28 @@ const styling = {
   classic: {
 
   },
+  blurb: {
+    padding: '20px 0px'
+  },
   nameplate: {
     backgroundColor: STYLES.PRIMARY,
     padding: '40px 0px',
   },
   name: {
     fontSize: 100,
+    lineHeight: '100px',
     textAlign: 'center',
-    fontFamily: 'Roboto Condensed',
+    fontFamily: 'Roboto Slab',
     fontWeight: 'bold',
-    fontStyle: 'italic',
     color: STYLES.OFF_WHITE,
   },
   title: {
     textAlign: 'center',
     color: '#fff',
     padding: '4px 16px',
-    border: '2px solid #fff',
     borderRadius: 2
   },
   contacts: {
-    backgroundColor: STYLES.MEDIUM_GRAY,
     padding: `${STYLES.CONTACT.padding}px 0px 0px 0px`,
     display: 'flex',
     alignContent: 'flex-end',
@@ -40,6 +41,7 @@ const styling = {
     overflow: 'hidden',
     marginRight: STYLES.CONTACT.padding,
     marginBottom: STYLES.CONTACT.padding,
+    borderBottom: '2px solid #32444a'
   },
   contactIcon: {
     textAlign: 'center',
@@ -100,27 +102,26 @@ class ClassicTemplate extends Component {
 
   render() {
     const { name, title, blurb, contacts, skills, projects } = this.props.data;
-    return(
+    return (
       <div id="resume">
         <div id="nameplate" style={styling.nameplate}>
           <div className="contain">
-            <div style={styling.name}>{name}</div>
+            <div id="name" style={styling.name}>{name}</div>
             <div style={styling.title}>{title}</div>
           </div>
         </div>
-        <div id="blurb" style={{backgroundColor: STYLES.DARK_GRAY}}>
-          <div className="contain">
-            {blurb}
-          </div>
-        </div>
-        <div id="contact-card" style={styling.contacts}>
+        <div id="contacts" style={styling.contacts}>
           <div className="contain">
             {this.stampContacts(contacts)}
           </div>
         </div>
-        <div className="blurb contain">{blurb}</div>
-        <div className="skill-container contain">
+        {/* <div className="skill-container contain">
           {this.stampSkills(skills)}
+        </div> */}
+        <div id="blurb" style={styling.blurb}>
+          <div className="contain">
+            {blurb}
+          </div>
         </div>
         <div className="projects-container">
           {this.stampProjects(projects)}

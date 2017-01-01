@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import Header from './header';
+import Nav from './nav';
 import * as STYLES from './styles';
 
 const styling = {
   contentArea: {
-    marginTop: STYLES.NAV_HEIGHT,
+    marginLeft: STYLES.NAV_WIDTH,
     backgroundColor: STYLES.LIGHT_GRAY,
     position: 'relative',
   }
@@ -19,9 +19,9 @@ export default class App extends Component {
   render() {
     return (
       <div id="rolo">
-        <Header />
+        <Nav />
         <div id="content-area" style={styling.contentArea}>
-        {this.props.children}
+          {this.props.children}
         </div>
       </div>
     );

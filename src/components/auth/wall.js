@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 export default function(ComposedComponent) {
   class Authentication extends Component {
     componentWillMount() {
+      console.log('wall mounting');
+      this.props.authenticateUser();
       if (!this.props.authenticated) {
         this.context.router.push('/');
       }
@@ -24,5 +27,5 @@ export default function(ComposedComponent) {
     return { authenticated: state.auth.authenticated };
   }
 
-  return connect(mapStateToProps)(Authentication)
+  return connect(mapStateToProps, actions)(Authentication)
 }

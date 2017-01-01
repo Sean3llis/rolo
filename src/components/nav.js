@@ -7,28 +7,38 @@ const styling = {
     position: 'fixed',
     display: 'flex',
     justifyContent: 'center',
-    width: '100%',
-    height: STYLES.NAV_HEIGHT,
+    height: '100%',
+    width: STYLES.NAV_WIDTH,
+    borderRight: `2px solid ${STYLES.DARK_GRAY}`,
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: STYLES.DARK_GRAY
+    zIndex: 100,
+    backgroundColor: STYLES.DARK_GRAY,
   },
   navItem: {
     color: STYLES.OFF_WHITE,
-    display: 'inline-block',
-    lineHeight: `${STYLES.NAV_HEIGHT}px`,
+    display: 'block',
+    textAlign: 'center',
+    lineHeight: `${STYLES.NAV_WIDTH / 2}px`,
+    height: `${STYLES.NAV_WIDTH / 2}px`,
     fontSize: 16,
     margin: '0 10px',
     textDecoration: 'none',
   }
 }
 
+const homeNav = {
+  ...styling.navItem,
+  backgroundColor: STYLES.PRIMARY
+}
+console.log('homeNav ~~>', homeNav);
+
 class Header extends Component {
   defaultNav() {
     return (
       <div className="navbar contain">
-        <Link to="/" style={styling.navItem}>ROLO</Link>
+        <Link to="/" style={homeNav}>ROLO</Link>
         <Link to="/signin" style={styling.navItem}>Sign In</Link>
         <Link to="/signup" style={styling.navItem}>Sign Up</Link>
       </div>

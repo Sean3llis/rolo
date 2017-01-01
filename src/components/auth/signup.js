@@ -26,7 +26,7 @@ class SignUp extends Component {
   render() {
     const { handleSubmit, fields: { email, password, passwordConfirm }} = this.props;
     return (
-      <div className="well">
+      <div id="signup" className="contain">
       <form onSubmit={handleSubmit(this.localSubmit.bind(this))}>
         <fieldset className="form-group">
           <label htmlFor="signup">Email:</label>

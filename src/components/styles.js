@@ -1,11 +1,14 @@
 export const DARK_GRAY = '#32444a';
 export const MEDIUM_GRAY = '#525b60';
-export const LIGHT_GRAY = '#e2e2e2';
+export const LIGHT_GRAY = '#f5f5f5';
 export const OFF_WHITE = '#f4f4f4';
 
-export const PRIMARY = '#2f7baf';
+export const PRIMARY = '#2aa079';
+export const INFO = '#2f7baf';
+export const DANGER = '#f05d48';
+export const WARNING = '#f2d142';
 
-export const NAV_HEIGHT = 40;
+export const NAV_WIDTH = 140;
 
 export const CONTACT = {
   padding: 14
