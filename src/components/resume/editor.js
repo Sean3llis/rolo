@@ -5,6 +5,14 @@ import * as actions from '../../actions';
 
 import AuthError from '../auth/error';
 
+const renderField = (field) => (
+  <div className="input-row">
+    <input {...field.input} type="text"/>
+    {field.meta.touched && field.meta.error &&
+     <span className="error">{field.meta.error}</span>}
+  </div>
+);
+
 class ResumeEditor extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +31,7 @@ class ResumeEditor extends Component {
   }
 
   render() {
+    console.log('this.props.initialValues ~~>', this.props.initialValues);
     const { handleSubmit, fields: { name, blurb }} = this.props;
     return (
       <div id="editor" className="contain">
@@ -33,12 +42,12 @@ class ResumeEditor extends Component {
 
           <fieldset className="form-group">
             <label htmlFor="name">Name:</label>
-            <Field className="form-control" name="name" component="input" type="text"/>
+            <Field className="form-control" name="name" component={renderField} />
           </fieldset>
 
           <fieldset className="form-group">
             <label htmlFor="blurb">Blurb:</label>
-            <Field className="form-control" name="blurb" component="input" type="textarea"/>
+            <Field className="form-control" name="blurb" component={renderField} />
           </fieldset>
 
           <fieldset className="form-group">
@@ -55,13 +64,25 @@ class ResumeEditor extends Component {
 }
 
 function mapStateToProps(state = {}) {
+  console.log('state ~~>', state);
   return {
     message: state.auth.message,
-    currentUser: state.auth.currentUser
+    currentUser: state.auth.currentUser,
+    initialValues: {...state.auth.currentUser}
   };
 }
 
-export default reduxForm({
-  form: 'signin',
-  fields: ['name', 'blurb']
-})(connect(mapStateToProps, actions)(ResumeEditor));
+ResumeEditor = reduxForm({
+  form: 'editor',
+  fields: ['name', 'blurb'],
+  enableReinitialize: true
+})(ResumeEditor);
+
+ResumeEditor = connect(mapStateToProps, actions)(ResumeEditor)
+
+export default ResumeEditor;
+
+// export default reduxForm({
+//   form: 'editor',
+//   fields: ['name', 'blurb']
+// })(connect(mapStateToProps, actions)(ResumeEditor));
