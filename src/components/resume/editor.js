@@ -5,13 +5,21 @@ import * as actions from '../../actions';
 
 import AuthError from '../auth/error';
 
-const renderField = (field) => (
+const textInput = (field) => (
   <div className="input-row">
     <input {...field.input} type="text"/>
     {field.meta.touched && field.meta.error &&
      <span className="error">{field.meta.error}</span>}
   </div>
 );
+
+const textAreaInput = (field) => {
+  return (
+    <div>
+      <textarea rows="10" {...field.input} />
+    </div>
+  )
+};
 
 class ResumeEditor extends Component {
   constructor(props) {
@@ -22,7 +30,7 @@ class ResumeEditor extends Component {
   }
 
   componentWillMount() {
-    // this.props.authenticateUser();
+    // this.props.fetchUser();
   }
 
   handleFormSubmit(formData) {
@@ -31,8 +39,7 @@ class ResumeEditor extends Component {
   }
 
   render() {
-    console.log('this.props.initialValues ~~>', this.props.initialValues);
-    const { handleSubmit, fields: { name, blurb }} = this.props;
+    const { handleSubmit, pristine, submitting, reset } = this.props;
     return (
       <div id="editor" className="contain">
         <div>Edit Your Resume Below!</div>
@@ -42,19 +49,24 @@ class ResumeEditor extends Component {
 
           <fieldset className="form-group">
             <label htmlFor="name">Name:</label>
-            <Field className="form-control" name="name" component={renderField} />
+            <Field className="form-control" name="name" component={textInput} />
           </fieldset>
 
           <fieldset className="form-group">
             <label htmlFor="blurb">Blurb:</label>
-            <Field className="form-control" name="blurb" component={renderField} />
+            <Field className="form-control" name="blurb" component={textAreaInput} />
           </fieldset>
+
+          {/* <fieldset className="form-group">
+            <label htmlFor="blurb">textarea:</label>
+            <Field className="form-control" name="blurb" component={textAreaInput} />
+          </fieldset> */}
 
           <fieldset className="form-group">
             <AuthError error={this.props.errorMessage} />
           </fieldset>
 
-          <button action="submit" className="btn btn-primary">Save</button>
+          <button action="submit" disabled={pristine || submitting} className="btn btn-primary">Save</button>
 
         </form>
         </div>
@@ -64,7 +76,6 @@ class ResumeEditor extends Component {
 }
 
 function mapStateToProps(state = {}) {
-  console.log('state ~~>', state);
   return {
     message: state.auth.message,
     currentUser: state.auth.currentUser,
@@ -74,7 +85,7 @@ function mapStateToProps(state = {}) {
 
 ResumeEditor = reduxForm({
   form: 'editor',
-  fields: ['name', 'blurb'],
+  fields: ['name', 'username', 'blurb'],
   enableReinitialize: true
 })(ResumeEditor);
 

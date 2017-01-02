@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import resumeData from './mock-resume';
 import Classic from '../templates/classic';
 
 import * as STYLES from '../styles';
+import * as actions from '../../actions';
 
 const styling = {
   edit: {
@@ -27,6 +29,7 @@ class Resume extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div style={{postion: 'relative'}}>
         {/* <Link style={styling.edit} to="/resume/edit">
@@ -39,4 +42,8 @@ class Resume extends Component {
   }
 }
 
-export default Resume;
+function mapStateToProps(state = {}) {
+  return { currentUser: state.auth.currentUser };
+}
+
+export default connect(mapStateToProps, actions)(Resume)

@@ -39,8 +39,8 @@ ReactDOM.render(
         <Route path="signup" component={SignUp}></Route>
         <Route path="signout" component={SignOut}></Route>
         <Route path="templates" component={AuthWall(TemplateChooser)}></Route>
-        <Route path="resume" component={Resume}></Route>
-        <Route path="resume/edit" component={AuthWall(ResumeEditor)}></Route>
+        <Route path=":username" component={Resume}></Route>
+        <Route path=":username/edit" component={AuthWall(ResumeEditor)}></Route>
       </Route>
     </Router>
   </Provider>

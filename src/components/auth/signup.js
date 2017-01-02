@@ -24,13 +24,13 @@ class SignUp extends Component {
   }
 
   render() {
-    const { handleSubmit, fields: { email, password, passwordConfirm }} = this.props;
+    const { handleSubmit, fields: { username, password, passwordConfirm }} = this.props;
     return (
       <div id="signup" className="contain">
       <form onSubmit={handleSubmit(this.localSubmit.bind(this))}>
         <fieldset className="form-group">
-          <label htmlFor="signup">Email:</label>
-          <Field name="email" component={this.renderInput} type="text"/>
+          <label htmlFor="signup">Username:</label>
+          <Field name="username" component={this.renderInput} type="text"/>
         </fieldset>
 
         <fieldset className="form-group">
@@ -69,6 +69,6 @@ function validate(formProps) {
 
 module.exports = reduxForm({
   form: 'signup',
-  fields: ['email', 'password', 'passwordConfirm'],
+  fields: ['username', 'password', 'passwordConfirm'],
   validate: validate
 })(connect(mapStateToProps, actions)(SignUp));

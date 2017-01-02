@@ -6,19 +6,19 @@ import * as actions from '../../actions';
 import AuthError from './error';
 
 class SignIn extends Component {
-  handleFormSubmit({ email, password }) {
-    this.props.signInUser({ email, password });
+  handleFormSubmit({ username, password }) {
+    this.props.signInUser({ username, password });
   }
 
   render() {
-    const { handleSubmit, fields: { email, password }} = this.props;
+    const { handleSubmit, fields: { username, password }} = this.props;
     return (
       <div className="contain">
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
         <fieldset>
-          <label htmlFor="">Email:</label>
-          <Field name="email" component="input" type="text"/>
+          <label htmlFor="">Username:</label>
+          <Field name="username" component="input" type="text"/>
         </fieldset>
 
         <fieldset>
@@ -44,5 +44,5 @@ function mapStateToProps(state = {}) {
 
 export default reduxForm({
   form: 'signin',
-  fields: ['email', 'password']
+  fields: ['username', 'password']
 })(connect(mapStateToProps, actions)(SignIn));

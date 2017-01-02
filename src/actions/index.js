@@ -4,9 +4,9 @@ import * as actions from './types'
 
 const ROOT_URL = 'http://localhost:3090';
 
-export function signInUser({ email, password }) {
+export function signInUser({ username, password }) {
   return function(dispatch) {
-    axios.post(`${ROOT_URL}/signin`, { email, password })
+    axios.post(`${ROOT_URL}/signin`, { username, password })
       .then(res => {
         const user = res.data.user;
         dispatch({ type: actions.AUTH_USER, payload: user._id });
@@ -22,15 +22,16 @@ export function signInUser({ email, password }) {
   }
 }
 
-export function signUpUser({ email, password }) {
+export function signUpUser({ username, password }) {
   return function(dispatch) {
-    axios.post(`${ROOT_URL}/signup`, {email, password})
+    axios.post(`${ROOT_URL}/signup`, {username, password})
       .then(response => {
         dispatch({ type: actions.AUTH_USER });
         localStorage.setItem('token', response.data.token);
-        browserHistory.push('/resume');
+        browserHistory.push('/resume/edit');
       })
       .catch(error => {
+        console.log('error ~~>', error);
         dispatch({
           type: actions.AUTH_ERROR,
           payload: error.response.data.error

@@ -32,7 +32,6 @@ const homeNav = {
   ...styling.navItem,
   backgroundColor: STYLES.PRIMARY
 }
-console.log('homeNav ~~>', homeNav);
 
 class Header extends Component {
   defaultNav() {
@@ -46,6 +45,7 @@ class Header extends Component {
   }
 
   authNav() {
+    console.log('this.props ~~>', this.props);
     return (
       <div className="navbar contain">
         <Link to="/" style={styling.navItem}>ROLO</Link>
@@ -74,7 +74,10 @@ class Header extends Component {
 }
 
 function mapStateToProps(state = {}) {
-  return { authenticated: state.auth.authenticated };
+  return {
+    authenticated: state.auth.authenticated,
+    currentUser: state.auth.currentUser
+  };
 }
 
 export default connect(mapStateToProps)(Header)

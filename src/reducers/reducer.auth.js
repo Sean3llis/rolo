@@ -12,7 +12,7 @@ export default function(state = {}, action) {
       console.log('action.payload ~~>', action.payload);
       return { ...state }
     default:
-      // if (localStorage.getItem('token')) return {...state, authenticated: true }
+      if (localStorage.getItem('token')) return {...state, authenticated: true }
   }
   return state;
 }
