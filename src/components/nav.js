@@ -45,12 +45,12 @@ class Header extends Component {
   }
 
   authNav() {
-    console.log('this.props ~~>', this.props);
+    const username = this.props.currentUser.username;
     return (
       <div className="navbar contain">
         <Link to="/" style={styling.navItem}>ROLO</Link>
-        <Link to="/resume" style={styling.navItem}>View Resume</Link>
-        <Link to="/resume/edit" style={styling.navItem}>Edit Resume</Link>
+        <Link to={`/${username}`} style={styling.navItem}>View Resume</Link>
+        <Link to={`/${username}/edit`} style={styling.navItem}>Edit Resume</Link>
         <Link to="/templates" style={styling.navItem}>Templates</Link>
         <Link to="/signout" style={styling.navItem}>Sign Out</Link>
         <Link to="/settings" style={styling.navItem}><i className="fa fa-gear"></i></Link>
@@ -59,7 +59,7 @@ class Header extends Component {
   }
 
   nav() {
-    return (this.props.authenticated)
+    return (this.props.currentUser)
       ? this.authNav()
       : this.defaultNav();
   }

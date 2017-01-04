@@ -20,30 +20,32 @@ const styling = {
   }
 }
 
-class Resume extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+function Template(props) {
+  return (props.viewingUser)
+    ? <Classic viewingUser={props.viewingUser} data={resumeData}/>
+    : null;
+}
 
-    };
+class Resume extends Component {
+  componentWillMount() {
+    this.props.getUser(this.props.params.username);
   }
 
   render() {
-    console.log(this.props);
+    console.log('this.props ~~>', this.props);
     return (
       <div style={{postion: 'relative'}}>
-        {/* <Link style={styling.edit} to="/resume/edit">
-          <i className="fa fa-pencil"></i>
-          Edit
-        </Link> */}
-        <Classic data={resumeData} />
+        <Template viewingUser={this.props.viewingUser} />
       </div>
     );
   }
 }
 
-function mapStateToProps(state = {}) {
-  return { currentUser: state.auth.currentUser };
+function mapStateToProps(state = {}, ownProps) {
+  console.log('state ~~>', state);
+  return {
+    viewingUser: state.auth.viewingUser
+  };
 }
 
 export default connect(mapStateToProps, actions)(Resume)

@@ -59,7 +59,6 @@ function mapStateToProps(state = {}) {
 }
 
 function validate(formProps) {
-  console.log('formProps ~~>', formProps);
   const errors = {};
   if (formProps.password !== formProps.passwordConfirm) {
     errors.password = 'Missmatch'

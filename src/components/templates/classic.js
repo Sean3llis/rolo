@@ -106,7 +106,7 @@ class ClassicTemplate extends Component {
       <div id="resume">
         <div id="nameplate" style={styling.nameplate}>
           <div className="contain">
-            <div id="name" style={styling.name}>{name}</div>
+            <div id="name" style={styling.name}>{this.props.viewingUser.name}</div>
             <div style={styling.title}>{title}</div>
           </div>
         </div>
@@ -120,7 +120,7 @@ class ClassicTemplate extends Component {
         </div> */}
         <div id="blurb" style={styling.blurb}>
           <div className="contain">
-            {blurb}
+            {this.props.viewingUser.blurb}
           </div>
         </div>
         <div className="projects-container">
