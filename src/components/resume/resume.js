@@ -32,10 +32,11 @@ class Resume extends Component {
   }
 
   render() {
-    console.log('this.props ~~>', this.props);
     return (
       <div style={{postion: 'relative'}}>
-        <Template viewingUser={this.props.viewingUser} />
+        {this.props.viewingUser &&
+          <Classic viewingUser={this.props.viewingUser} data={resumeData}/>
+        }
       </div>
     );
   }

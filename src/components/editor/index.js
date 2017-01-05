@@ -4,6 +4,15 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 import AuthError from '../auth/error';
+import ContactInput from './contact';
+
+const contactFields = [
+  { name: 'email', icon: 'envelope', placeHolder: 'you@snailmail.com' },
+  { name: 'phone', icon: 'phone', placeHolder: '(555)867-5309' },
+  { name: 'linkedin', icon: 'linkedin', placeHolder: 'https://www.linkedin.com/in/sean3llis' },
+  { name: 'github', icon: 'github', placeHolder: 'https://www.github.com/sean3llis' },
+  { name: 'twitter', icon: 'twitter', placeHolder: 'https://www.twitter.com/sean3llis' }
+];
 
 const textInput = (field) => (
   <div className="input-row">
@@ -38,6 +47,19 @@ class ResumeEditor extends Component {
     this.props.updateUser(formData, this.props.currentUser._id);
   }
 
+  stampContacts() {
+    return contactFields.map((contact, i) => {
+      return(
+        <Field
+          key={i}
+          name={contact.name}
+          icon={contact.icon}
+          placeHolder={contact.placeHolder}
+          component={ContactInput} />
+      );
+    });
+  }
+
   render() {
     console.log('render');
     const { handleSubmit, pristine, submitting, reset } = this.props;
@@ -56,6 +78,10 @@ class ResumeEditor extends Component {
           <fieldset className="form-group">
             <label htmlFor="blurb">Blurb:</label>
             <Field className="form-control" name="blurb" component={textAreaInput} />
+          </fieldset>
+
+          <fieldset className="form-group">
+            {this.stampContacts()}
           </fieldset>
 
           {/* <fieldset className="form-group">
@@ -93,8 +119,3 @@ ResumeEditor = reduxForm({
 ResumeEditor = connect(mapStateToProps, actions)(ResumeEditor)
 
 export default ResumeEditor;
-
-// export default reduxForm({
-//   form: 'editor',
-//   fields: ['name', 'blurb']
-// })(connect(mapStateToProps, actions)(ResumeEditor));

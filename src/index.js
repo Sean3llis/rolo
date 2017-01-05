@@ -20,7 +20,7 @@ import SignOut from './components/auth/signout';
 import Welcome from './components/welcome';
 import TemplateChooser from './components/templates/chooser';
 import Resume from './components/resume/resume';
-import ResumeEditor from './components/resume/editor';
+import Editor from './components/editor';
 
 /**
  * REDUX SETUP
@@ -46,7 +46,7 @@ ReactDOM.render(
         <Route path="signout" component={SignOut}></Route>
         <Route path="templates" component={AuthWall(TemplateChooser)}></Route>
         <Route path=":username" component={Resume}></Route>
-        <Route path=":username/edit" component={AuthWall(ResumeEditor)}></Route>
+        <Route path=":username/edit" component={AuthWall(Editor)}></Route>
       </Route>
     </Router>
   </Provider>

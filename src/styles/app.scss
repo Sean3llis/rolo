@@ -1,6 +1,7 @@
 * {
   font-family: 'Tahoma', 'Arial', sans-serif;
   color: #525b60;
+  box-sizing: border-box;
 }
 
 body {
@@ -22,7 +23,7 @@ fieldset, input, textarea, button {
   width: 100%;
   padding: 8px;
   margin: 0;
-  font-size: 18px;
+  font-size: 14px;
   border-radius: 2px;
 }
 
