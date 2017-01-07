@@ -14,8 +14,10 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel',
-        query: { presets: ['react', 'es2015'] }
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'stage-0', 'react']
+        }
       },
       {
         test: /\.hbs$/,

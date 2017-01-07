@@ -1,34 +1,31 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import * as STYLES from '../styles';
 
+/**
+ * COMPONENTS:
+ */
 import AuthError from '../auth/error';
 import ContactInput from './contact';
+import ColorPicker from './color';
+import textInput from './input.text';
+import textAreaInput from './input.textarea';
+import Submit from './submit';
+import renderProjects from './projects';
+import Label from './label';
 
+/**
+ * CONFIGS:
+ */
 const contactFields = [
   { name: 'email', icon: 'envelope', placeHolder: 'you@snailmail.com' },
-  { name: 'phone', icon: 'phone', placeHolder: '(555)867-5309' },
+  { name: 'phone', icon: 'phone', placeHolder: '(555) 867-5309' },
   { name: 'linkedin', icon: 'linkedin', placeHolder: 'https://www.linkedin.com/in/sean3llis' },
   { name: 'github', icon: 'github', placeHolder: 'https://www.github.com/sean3llis' },
   { name: 'twitter', icon: 'twitter', placeHolder: 'https://www.twitter.com/sean3llis' }
 ];
-
-const textInput = (field) => (
-  <div className="input-row">
-    <input {...field.input} type="text"/>
-    {field.meta.touched && field.meta.error &&
-     <span className="error">{field.meta.error}</span>}
-  </div>
-);
-
-const textAreaInput = (field) => {
-  return (
-    <div>
-      <textarea rows="10" {...field.input} />
-    </div>
-  )
-};
 
 class ResumeEditor extends Component {
   constructor(props) {
@@ -38,30 +35,12 @@ class ResumeEditor extends Component {
     };
   }
 
-  componentWillMount() {
-    // this.props.fetchUser();
-  }
-
   handleFormSubmit(formData) {
-    console.log('submitted update');
+    console.log('submitted: ~~>', formData);
     this.props.updateUser(formData, this.props.currentUser._id);
   }
 
-  stampContacts() {
-    return contactFields.map((contact, i) => {
-      return(
-        <Field
-          key={i}
-          name={contact.name}
-          icon={contact.icon}
-          placeHolder={contact.placeHolder}
-          component={ContactInput} />
-      );
-    });
-  }
-
   render() {
-    console.log('render');
     const { handleSubmit, pristine, submitting, reset } = this.props;
     return (
       <div id="editor" className="contain">
@@ -70,30 +49,42 @@ class ResumeEditor extends Component {
         <div>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
-          <fieldset className="form-group">
-            <label htmlFor="name">Name:</label>
-            <Field className="form-control" name="name" component={textInput} />
+          <fieldset>
+            <Label htmlFor="name">Name</Label>
+            <Field name="name" component={textInput} />
           </fieldset>
 
-          <fieldset className="form-group">
-            <label htmlFor="blurb">Blurb:</label>
-            <Field className="form-control" name="blurb" component={textAreaInput} />
+          <fieldset>
+            <Label htmlFor="blurb">Blurb</Label>
+            <Field name="blurb" component={textAreaInput} />
           </fieldset>
 
-          <fieldset className="form-group">
-            {this.stampContacts()}
+          <fieldset>
+            <Label htmlFor="name">Name</Label>
+            {contactFields.map((contact, i) => (
+              <Field
+                key={i}
+                name={contact.name}
+                icon={contact.icon}
+                placeHolder={contact.placeHolder}
+                component={ContactInput} />
+            ))}
           </fieldset>
 
-          {/* <fieldset className="form-group">
-            <label htmlFor="blurb">textarea:</label>
-            <Field className="form-control" name="blurb" component={textAreaInput} />
-          </fieldset> */}
+          <fieldset>
+            <label htmlFor="blurb">Color:</label>
+            <Field name="color" component={ColorPicker} />
+          </fieldset>
 
-          <fieldset className="form-group">
+          <fieldset>
             <AuthError error={this.props.errorMessage} />
           </fieldset>
 
-          <button action="submit" disabled={pristine || submitting} className="btn btn-primary">Save</button>
+          <fieldset>
+            <FieldArray name="projects" component={renderProjects}/>
+          </fieldset>
+
+          <Submit disabled={pristine || submitting}>Save</Submit>
 
         </form>
         </div>
@@ -112,7 +103,7 @@ function mapStateToProps(state = {}) {
 
 ResumeEditor = reduxForm({
   form: 'editor',
-  fields: ['name', 'username', 'blurb'],
+  fields: ['name', 'blurb', 'color', 'projects'],
   enableReinitialize: true
 })(ResumeEditor);
 

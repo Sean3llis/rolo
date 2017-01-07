@@ -16,17 +16,21 @@ const styling = {
     textAlign: 'center',
     backgroundColor: STYLES.DARK_GRAY,
   },
+  span: {
+    color: STYLES.OFF_WHITE,
+    fontSize: 16,
+  },
   input: {
     height: '100%',
     paddingLeft: 50
   }
 };
 
-module.exports = field => {
+export default field => {
   const iconClass = `fa fa-${field.icon}`;
   return (
     <div className="input-row" style={styling.row}>
-      <div style={styling.icon}><i className={iconClass} style={{color: STYLES.OFF_WHITE}}></i></div>
+      <div style={styling.icon}><i className={iconClass} style={styling.span}></i></div>
       <input {...field.input} type="text" style={styling.input} placeholder={field.placeHolder} />
       {field.meta.touched && field.meta.error &&
        <span className="error">{field.meta.error}</span>}

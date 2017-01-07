@@ -55,8 +55,12 @@ fieldset {
 }
 
 button:disabled {
-  background-color: red;
+  background-color: #f05d48;
   &:hover {
     cursor: no-drop;
   }
+}
+
+.block-picker {
+  width: 100% !important;
 }
