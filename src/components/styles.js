@@ -1,5 +1,6 @@
 export const DARK_GRAY = '#32444a';
-export const MEDIUM_GRAY = '#525b60';
+export const MEDIUM_GRAY = '#8e9ba2';
+export const LIGHT_MEDIUM_GRAY = '#e6e6e6';
 export const LIGHT_GRAY = '#f5f5f5';
 export const OFF_WHITE = '#f4f4f4';
 

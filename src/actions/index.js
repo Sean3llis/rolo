@@ -96,7 +96,6 @@ export function authenticateUser() {
       headers: { authorization: localStorage.getItem(TOKEN)}
     })
     .then(response => {
-      console.log('authing user:', response.data);
       dispatch({
         type: actions.AUTH_USER,
         payload: response.data

@@ -1,34 +1,88 @@
 import React from 'react';
+import { Field, FieldArray, reduxForm } from 'redux-form';
+import * as STYLES from '../styles';
 
-const renderProject = () => {
-
+import Label from './label';
+import TextInput from './input.text';
+const styling = {
+  add: {
+    backgroundColor: STYLES.PRIMARY,
+    color: STYLES.OFF_WHITE,
+    borderRadius: '2px 2px 0px 0px'
+  },
+  project: {
+    position: 'relative',
+    backgroundColor: STYLES.LIGHT_MEDIUM_GRAY,
+    padding: '30px 10px',
+    marginBottom: 6
+  },
+  delete: {
+    position: 'absolute',
+    width: 'auto',
+    top: 0,
+    left: -20,
+    padding: 2,
+    fontSize: 12,
+    lineHeight: '12px',
+    backgroundColor: STYLES.DANGER,
+    color: STYLES.OFF_WHITE,
+  },
+  counter: {
+    position: 'absolute',
+    left: -20,
+    top: 20,
+    color: STYLES.MEDIUM_GRAY
+  }
 };
 
+
 export default ({ fields, meta: { touched, error } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push({})}>Add Member</button>
-      {touched && error && <span>{error}</span>}
-    </li>
-    {fields.map((member, index) =>
-      <li key={index}>
+  <div>
+    <button style={styling.add} type="button" onClick={() => fields.push({})}>
+      <i className="fa fa-plus"></i>
+    </button>
+    {touched && error && <span>{error}</span>}
+    {fields.map((project, i) => (
+      <div className="project" key={i} style={styling.project}>
         <button
           type="button"
           title="Remove Member"
-          onClick={() => fields.remove(index)}/>
-        <h4>Member #{index + 1}</h4>
-        <Field
-          name={`${member}.firstName`}
-          type="text"
-          component={renderField}
-          label="First Name"/>
-        <Field
-          name={`${member}.lastName`}
-          type="text"
-          component={renderField}
-          label="Last Name"/>
-        <FieldArray name={`${member}.hobbies`} component={renderHobbies}/>
-      </li>
-    )}
-  </ul>
+          style={styling.delete}
+          onClick={() => fields.remove(i)}><i className="fa fa-times"></i></button>
+          <div className="counter" style={styling.counter}>{i + 1}</div>
+          <div className="row">
+          <div className="col-sm-6">
+            <Label>Title</Label>
+            <Field
+              name={`${project}.firstName`}
+              type="text"
+              component={TextInput} />
+          </div>
+          <div className="col-sm-6">
+            <Label>Link</Label>
+            <Field
+              name={`${project}.lastName`}
+              type="text"
+              component={TextInput} />
+          </div>
+          </div>
+      </div>
+    ))}
+  </div>
 );
+
+
+//
+// <div key={index}>
+//   <button
+//     type="button"
+//     title="Remove Member"
+//     onClick={() => fields.remove(index)}>Delete</button>
+//   <h4>Member #{index + 1}</h4>
+//   <Field
+//     name={`${project}.firstName`}
+//     type="text"
+//     component={Project}
+//     label="First Name"/>
+//   {/* <FieldArray name={`${project}.hobbies`} component={renderProject}/> */}
+// </div>

@@ -18,11 +18,12 @@ const styling = {
   },
   span: {
     color: STYLES.OFF_WHITE,
-    fontSize: 16,
+    fontSize: 14,
   },
   input: {
     height: '100%',
-    paddingLeft: 50
+    paddingLeft: 50,
+    fontSize: 12
   }
 };
 

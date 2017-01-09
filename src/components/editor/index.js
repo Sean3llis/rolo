@@ -44,9 +44,6 @@ class ResumeEditor extends Component {
     const { handleSubmit, pristine, submitting, reset } = this.props;
     return (
       <div id="editor" className="contain">
-        <div>Edit Your Resume Below!</div>
-        <div>Message: </div>
-        <div>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
           <fieldset>
@@ -72,7 +69,7 @@ class ResumeEditor extends Component {
           </fieldset>
 
           <fieldset>
-            <label htmlFor="blurb">Color:</label>
+            <Label htmlFor="color">Theme Color</Label>
             <Field name="color" component={ColorPicker} />
           </fieldset>
 
@@ -80,14 +77,14 @@ class ResumeEditor extends Component {
             <AuthError error={this.props.errorMessage} />
           </fieldset>
 
-          <fieldset>
+          <fieldset style={{paddingLeft: 15}}>
+            <Label htmlFor="projects">Projects</Label>
             <FieldArray name="projects" component={renderProjects}/>
           </fieldset>
 
           <Submit disabled={pristine || submitting}>Save</Submit>
 
         </form>
-        </div>
       </div>
     );
   }

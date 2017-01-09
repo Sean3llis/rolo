@@ -8,6 +8,7 @@ const styling = {
     marginLeft: STYLES.NAV_WIDTH,
     backgroundColor: STYLES.LIGHT_GRAY,
     position: 'relative',
+    padding: '40px 0px'
   }
 }
 
