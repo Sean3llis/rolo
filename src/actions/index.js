@@ -18,12 +18,15 @@ function clearLocalUser() {
 
 export function signInUser({ username, password }) {
   return function(dispatch) {
+    console.log('username ~~>', username);
+    console.log('password ~~>', password);
     axios.post(`${ROOT_URL}/signin`, { username, password })
       .then(response => {
         const user = response.data.user;
         delete user.password;
         dispatch({ type: actions.AUTH_USER, payload: user });
-        saveLocalUser(response.data.token, user)
+        saveLocalUser(response.data.token, user);
+        console.log('response.data.token ~~>', response.data.token);
         browserHistory.push(`/${user.username}`);
       })
       .catch(error => {
@@ -40,10 +43,8 @@ export function signUpUser({ username, password }) {
     axios.post(`${ROOT_URL}/signup`, {username, password})
       .then(response => {
         const user = response.data.user;
-        console.log('authing user:', user);
-
         dispatch({ type: actions.AUTH_USER, payload: user });
-        localStorage.setItem(TOKEN, response.data.token);
+        saveLocalUser(response.data.token, user)
         browserHistory.push(`/${user.username}/edit`);
       })
       .catch(error => {

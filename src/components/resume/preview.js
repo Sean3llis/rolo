@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import * as STYLES from '../styles';
 const styling = {
-  classic: {
-
-  },
+  preview: {
+    border: `2px solid ${STYLES.MEDIUM_GRAY}`
+  }
   blurb: {
     padding: '20px 0px'
   },
@@ -105,6 +105,7 @@ class ClassicTemplate extends Component {
     const { name, title, blurb, contacts, skills, projects } = this.props.data;
     if (!this.props.formData) return null;
     return (
+      <div id="preview" style={styling.preview}>
       <div id="resume">
         <div id="nameplate" style={styling.nameplate}>
           <div className="contain">
@@ -128,6 +129,7 @@ class ClassicTemplate extends Component {
         <div className="projects-container">
           {this.stampProjects(projects)}
         </div>
+      </div>
       </div>
     );
   }

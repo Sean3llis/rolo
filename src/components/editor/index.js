@@ -16,6 +16,9 @@ import Submit from './submit';
 import renderProjects from './projects';
 import Label from './label';
 
+import resumeData from '../resume/mock-resume';
+import Classic from '../templates/classic';
+
 /**
  * CONFIGS:
  */
@@ -26,6 +29,15 @@ const contactFields = [
   { name: 'github', icon: 'github', placeHolder: 'https://www.github.com/sean3llis' },
   { name: 'twitter', icon: 'twitter', placeHolder: 'https://www.twitter.com/sean3llis' }
 ];
+
+const styling = {
+  formArea: {
+    backgroundColor: STYLES.LIGHT_MEDIUM_GRAY
+  },
+  preview: {
+    backgroundColor: STYLES.LIGHT_GRAY
+  }
+};
 
 class ResumeEditor extends Component {
   constructor(props) {
@@ -42,8 +54,10 @@ class ResumeEditor extends Component {
 
   render() {
     const { handleSubmit, pristine, submitting, reset } = this.props;
+    console.log('this.props ~~>', this.props);
     return (
-      <div id="editor" className="contain">
+      <div id="editor" className="row">
+      <div className="col-sm-6" style={styling.formArea}>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
           <fieldset>
@@ -85,22 +99,29 @@ class ResumeEditor extends Component {
           <Submit disabled={pristine || submitting}>Save</Submit>
 
         </form>
+        </div>
+        <div className="col-sm-6" style={styling.preview}>
+          <Classic viewingUser={this.props.currentUser} formData={this.props.formData} data={resumeData} />
+        </div>
       </div>
     );
   }
 }
 
 function mapStateToProps(state = {}) {
-  return {
+  console.log('state ~~>', state);
+  let newState = {
     message: state.auth.message,
     currentUser: state.auth.currentUser,
     initialValues: {...state.auth.currentUser}
   };
+  if (state.form && state.form.editor) newState.formData = state.form.editor.values;
+  return newState;
 }
 
 ResumeEditor = reduxForm({
   form: 'editor',
-  fields: ['name', 'blurb', 'color', 'projects'],
+  fields: ['name', 'blurb', 'color', 'projects', 'github', 'twitter', 'linkedin', 'email', ],
   enableReinitialize: true
 })(ResumeEditor);
 

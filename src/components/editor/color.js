@@ -13,20 +13,16 @@ class ColorPicker extends React.Component {
   };
 
   handleChangeComplete(color) {
-    // console.log(`change complete: ${color.hex}`);
-    // this.setState({
-    //   backgrou
-    // })
+    console.log('color.hex ~~>', color.hex);
+    console.log('this.props ~~>', this.props);
     this.props.input.onChange(color.hex);
-    this.setState({color: color.hex})
-    // return true;
-    // var test = '12312';
+    this.setState({color: color.hex});
   };
 
   render() {
     return (
       <div>
-      <input type="hidden" {...this.props.field} />
+      <input type="hidden" {...this.props.input} />
       <BlockPicker
         color={this.state.color}
         style={{width: '100%'}}

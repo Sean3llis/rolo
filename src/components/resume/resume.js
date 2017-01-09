@@ -35,7 +35,7 @@ class Resume extends Component {
     return (
       <div style={{postion: 'relative'}}>
         {this.props.viewingUser &&
-          <Classic viewingUser={this.props.viewingUser} data={resumeData}/>
+          <Classic viewingUser={this.props.viewingUser} formData={formData} data={resumeData}/>
         }
       </div>
     );
@@ -43,9 +43,9 @@ class Resume extends Component {
 }
 
 function mapStateToProps(state = {}, ownProps) {
-  console.log('state ~~>', state);
   return {
-    viewingUser: state.auth.viewingUser
+    viewingUser: state.auth.viewingUser,
+    formData: state.form.editor.values
   };
 }
 
