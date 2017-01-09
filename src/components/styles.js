@@ -11,6 +11,8 @@ export const WARNING = '#f2d142';
 
 export const NAV_WIDTH = 140;
 
+export const BORDER = `2px solid rgba(0,0,0,0.3)`;
+
 export const CONTACT = {
   padding: 14
 }

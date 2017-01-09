@@ -15,6 +15,7 @@ const styling = {
     right: 0,
     zIndex: 100,
     backgroundColor: STYLES.DARK_GRAY,
+    borderRight: STYLES.BORDER
   },
   navItem: {
     color: STYLES.OFF_WHITE,

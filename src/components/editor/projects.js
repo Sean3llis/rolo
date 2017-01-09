@@ -12,7 +12,7 @@ const styling = {
   },
   project: {
     position: 'relative',
-    backgroundColor: STYLES.LIGHT_MEDIUM_GRAY,
+    backgroundColor: STYLES.LIGHT_GRAY,
     padding: '30px 10px',
     marginBottom: 6
   },

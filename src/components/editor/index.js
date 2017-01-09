@@ -32,10 +32,28 @@ const contactFields = [
 
 const styling = {
   formArea: {
-    backgroundColor: STYLES.LIGHT_MEDIUM_GRAY
+    backgroundColor: STYLES.LIGHT_MEDIUM_GRAY,
+    height: '100%',
   },
-  preview: {
-    backgroundColor: STYLES.LIGHT_GRAY
+  formInner: {
+    overflowY: 'scroll',
+    height: window.innerHeight,
+    padding: '0px 20px'
+  },
+  previewArea: {
+    backgroundColor: STYLES.LIGHT_GRAY,
+    padding: 0,
+    overflowY: 'scroll',
+    height: window.innerHeight
+  },
+  titleBar: {
+    backgroundColor: STYLES.DARK_GRAY,
+    textAlign: 'center',
+    height: 40,
+    lineHeight: '40px'
+  },
+  editBar: {
+    borderRight: STYLES.BORDER
   }
 };
 
@@ -54,10 +72,11 @@ class ResumeEditor extends Component {
 
   render() {
     const { handleSubmit, pristine, submitting, reset } = this.props;
-    console.log('this.props ~~>', this.props);
     return (
-      <div id="editor" className="row">
+      <div id="editor">
+      <div id="editor-row" className="row">
       <div className="col-sm-4" style={styling.formArea}>
+        <div className="form-inner" style={styling.formInner}>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
           <fieldset>
@@ -91,7 +110,7 @@ class ResumeEditor extends Component {
             <AuthError error={this.props.errorMessage} />
           </fieldset>
 
-          <fieldset style={{paddingLeft: 15}}>
+          <fieldset>
             <Label htmlFor="projects">Projects</Label>
             <FieldArray name="projects" component={renderProjects}/>
           </fieldset>
@@ -100,9 +119,13 @@ class ResumeEditor extends Component {
 
         </form>
         </div>
-        <div className="col-sm-8" style={styling.preview}>
+        </div>
+        <div className="col-sm-8" style={styling.previewArea}>
+        <div style={styling.titleBar}><i className="fa fa-eye"></i></div>
+
           <Classic viewingUser={this.props.currentUser} formData={this.props.formData} data={resumeData} />
         </div>
+      </div>
       </div>
     );
   }
