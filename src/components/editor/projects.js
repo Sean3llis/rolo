@@ -4,6 +4,7 @@ import * as STYLES from '../styles';
 
 import Label from './label';
 import TextInput from './input.text';
+import TextAreaInput from './input.textarea';
 const styling = {
   add: {
     backgroundColor: STYLES.PRIMARY,
@@ -15,6 +16,9 @@ const styling = {
     backgroundColor: STYLES.LIGHT_GRAY,
     padding: '30px 10px',
     marginBottom: 6
+  },
+  projectRow: {
+    marginBottom: 10
   },
   delete: {
     position: 'absolute',
@@ -49,23 +53,34 @@ export default ({ fields, meta: { touched, error } }) => (
           title="Remove Member"
           style={styling.delete}
           onClick={() => fields.remove(i)}><i className="fa fa-times"></i></button>
-          <div className="counter" style={styling.counter}>{i + 1}</div>
-          <div className="row">
-          <div className="col-sm-6">
-            <Label>Title</Label>
+        <div className="counter" style={styling.counter}>{i + 1}</div>
+        <div className="row" style={styling.projectRow}>
+          <div className="col-sm-2"><Label>Title</Label></div>
+          <div className="col-sm-10">
             <Field
               name={`${project}.firstName`}
               type="text"
               component={TextInput} />
           </div>
-          <div className="col-sm-6">
-            <Label>Link</Label>
+        </div>
+        <div className="row" style={styling.projectRow}>
+          <div className="col-sm-2"><Label>Link</Label></div>
+          <div className="col-sm-10">
             <Field
               name={`${project}.lastName`}
               type="text"
               component={TextInput} />
           </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-2"><Label>Description</Label></div>
+          <div className="col-sm-10">
+            <Field
+              name={`${project}.lastName`}
+              type="textarea"
+              component={TextAreaInput}/>
           </div>
+        </div>
       </div>
     ))}
   </div>

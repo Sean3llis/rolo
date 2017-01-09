@@ -91,7 +91,7 @@ class ClassicTemplate extends Component {
     for (var i = 0; i < contacts.length; i++) {
       let currentContact = contacts[i];
       contactNodes.push(
-        <span style={styling.contactNode} key={i}>
+        <span style={{...styling.contactNode, backgroundColor: this.props.formData.color}} key={i}>
           <i className={classNames('fa', `fa-${currentContact.icon}`)} style={styling.contactIcon}></i>
           {currentContact.value}
         </span>
@@ -101,12 +101,11 @@ class ClassicTemplate extends Component {
   }
 
   render() {
-    console.log('this.props.formData ~~>', this.props.formData);
     const { name, title, blurb, contacts, skills, projects } = this.props.data;
     if (!this.props.formData) return null;
     return (
       <div id="resume">
-        <div id="nameplate" style={styling.nameplate}>
+        <div id="nameplate" style={{...styling.nameplate, backgroundColor: this.props.formData.color}}>
           <div className="contain">
             <div id="name" style={styling.name}>{this.props.formData.name}</div>
             <div style={styling.title}>{title}</div>

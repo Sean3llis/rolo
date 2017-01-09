@@ -19,12 +19,17 @@ class ColorPicker extends React.Component {
     this.setState({color: color.hex});
   };
 
+  componentWillMount() {
+    this.handleChangeComplete({ hex: STYLES.PRIMARY });
+  };
+
   render() {
+    console.log('this.state.color ~~>', this.state.color);
     return (
       <div>
       <input type="hidden" {...this.props.input} />
       <BlockPicker
-        color={this.state.color}
+        color={this.state.color || STYLES.PRIMARY}
         style={{width: '100%'}}
         triangle={'hide'}
         onChangeComplete={this.handleChangeComplete}
