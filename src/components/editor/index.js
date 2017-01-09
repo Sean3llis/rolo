@@ -57,7 +57,7 @@ class ResumeEditor extends Component {
     console.log('this.props ~~>', this.props);
     return (
       <div id="editor" className="row">
-      <div className="col-sm-6" style={styling.formArea}>
+      <div className="col-sm-4" style={styling.formArea}>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
           <fieldset>
@@ -100,7 +100,7 @@ class ResumeEditor extends Component {
 
         </form>
         </div>
-        <div className="col-sm-6" style={styling.preview}>
+        <div className="col-sm-8" style={styling.preview}>
           <Classic viewingUser={this.props.currentUser} formData={this.props.formData} data={resumeData} />
         </div>
       </div>
