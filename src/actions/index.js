@@ -18,8 +18,6 @@ function clearLocalUser() {
 
 export function signInUser({ username, password }) {
   return function(dispatch) {
-    console.log('username ~~>', username);
-    console.log('password ~~>', password);
     axios.post(`${ROOT_URL}/signin`, { username, password })
       .then(response => {
         const user = response.data.user;
@@ -48,7 +46,6 @@ export function signUpUser({ username, password }) {
         browserHistory.push(`/${user.username}/edit`);
       })
       .catch(error => {
-        console.log('error ~~>', error);
         dispatch({
           type: actions.AUTH_ERROR,
           payload: error.response.data.error
@@ -106,11 +103,9 @@ export function authenticateUser() {
 }
 
 export function getUser(username) {
-  console.log('get user');
   return function(dispatch) {
     axios.get(`${ROOT_URL}/${username}`)
     .then(response => {
-      console.log('response');
       dispatch({
         type: actions.RECEIVE_USER,
         payload: response.data.user

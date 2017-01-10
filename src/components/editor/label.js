@@ -11,5 +11,5 @@ const styling = {
 };
 
 export default props => (
-  <label style={styling} htmlFor={props.htmlFor}>{props.children}</label>
+  <label style={{...styling, ...props.style}} htmlFor={props.htmlFor}>{props.children}</label>
 );

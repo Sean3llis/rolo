@@ -2,6 +2,21 @@ import React from 'react';
 import { BlockPicker } from 'react-color';
 import * as STYLES from '../styles';
 
+const colors = [
+  '#202a2d',
+  STYLES.DARK_GRAY,
+  '#4f5f65',
+  STYLES.MEDIUM_GRAY,
+  STYLES.PRIMARY,
+  STYLES.DANGER,
+  STYLES.WARNING,
+  '#409c95',
+  '#3e86bb',
+  '#485182',
+  '#594971',
+  '#ad4d78'
+]
+
 class ColorPicker extends React.Component {
   constructor(props) {
     super(props);
@@ -9,28 +24,26 @@ class ColorPicker extends React.Component {
   };
 
   state = {
-    color: STYLES.PRIMARY
+    color: this.props.color
   };
 
   handleChangeComplete(color) {
-    console.log('color.hex ~~>', color.hex);
-    console.log('this.props ~~>', this.props);
     this.props.input.onChange(color.hex);
     this.setState({color: color.hex});
   };
 
   componentWillMount() {
-    this.handleChangeComplete({ hex: STYLES.PRIMARY });
-  };
+    this.setState({color: this.props.color})
+  }
 
   render() {
-    console.log('this.state.color ~~>', this.state.color);
     return (
       <div>
-      <input type="hidden" {...this.props.input} />
+      <input onChange={e => console.log(e)}type="hidden" {...this.props.input} />
       <BlockPicker
-        color={this.state.color || STYLES.PRIMARY}
-        style={{width: '100%'}}
+        color={this.state.color}
+        colors={colors}
+        width={'100%'}
         triangle={'hide'}
         onChangeComplete={this.handleChangeComplete}
        />

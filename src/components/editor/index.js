@@ -34,6 +34,7 @@ const styling = {
   formArea: {
     backgroundColor: STYLES.LIGHT_MEDIUM_GRAY,
     height: '100%',
+    padding: 0
   },
   formInner: {
     overflowY: 'scroll',
@@ -71,11 +72,13 @@ class ResumeEditor extends Component {
   }
 
   render() {
+    console.log('this.props.currentUser.color ~~>', this.props.currentUser.color);
     const { handleSubmit, pristine, submitting, reset } = this.props;
     return (
       <div id="editor">
       <div id="editor-row" className="row">
       <div className="col-sm-4" style={styling.formArea}>
+        <div style={styling.titleBar}><i className="fa fa-eye"></i></div>
         <div className="form-inner" style={styling.formInner}>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
@@ -103,7 +106,7 @@ class ResumeEditor extends Component {
 
           <fieldset>
             <Label htmlFor="color">Theme Color</Label>
-            <Field name="color" component={ColorPicker} />
+            <Field name="color" color={this.props.currentUser.color} component={ColorPicker} />
           </fieldset>
 
           <fieldset>
@@ -132,7 +135,6 @@ class ResumeEditor extends Component {
 }
 
 function mapStateToProps(state = {}) {
-  console.log('state ~~>', state);
   let newState = {
     message: state.auth.message,
     currentUser: state.auth.currentUser,

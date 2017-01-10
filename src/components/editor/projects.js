@@ -36,6 +36,11 @@ const styling = {
     left: -20,
     top: 20,
     color: STYLES.MEDIUM_GRAY
+  },
+  projectLabel: {
+    marginBottom: 0,
+    marginTop: 10,
+    textAlign: 'right'
   }
 };
 
@@ -55,28 +60,28 @@ export default ({ fields, meta: { touched, error } }) => (
           onClick={() => fields.remove(i)}><i className="fa fa-times"></i></button>
         <div className="counter" style={styling.counter}>{i + 1}</div>
         <div className="row" style={styling.projectRow}>
-          <div className="col-sm-2"><Label>Title</Label></div>
+          <div className="col-sm-2"><Label style={styling.projectLabel}>Title</Label></div>
           <div className="col-sm-10">
             <Field
-              name={`${project}.firstName`}
+              name={`${project}.title`}
               type="text"
               component={TextInput} />
           </div>
         </div>
         <div className="row" style={styling.projectRow}>
-          <div className="col-sm-2"><Label>Link</Label></div>
+          <div className="col-sm-2"><Label style={styling.projectLabel}>Link</Label></div>
           <div className="col-sm-10">
             <Field
-              name={`${project}.lastName`}
+              name={`${project}.link`}
               type="text"
               component={TextInput} />
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-2"><Label>Description</Label></div>
+          <div className="col-sm-2"><Label style={styling.projectLabel}>Description</Label></div>
           <div className="col-sm-10">
             <Field
-              name={`${project}.lastName`}
+              name={`${project}.description`}
               type="textarea"
               component={TextAreaInput}/>
           </div>
