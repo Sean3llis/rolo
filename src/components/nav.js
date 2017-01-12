@@ -9,29 +9,57 @@ const styling = {
     justifyContent: 'center',
     height: '100%',
     width: STYLES.NAV_WIDTH,
-    borderRight: `2px solid ${STYLES.DARK_GRAY}`,
     top: 0,
     left: 0,
     right: 0,
     zIndex: 100,
     backgroundColor: STYLES.DARK_GRAY,
-    borderRight: STYLES.BORDER
   },
   navItem: {
     color: STYLES.OFF_WHITE,
-    display: 'block',
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
     textAlign: 'center',
-    lineHeight: `${STYLES.NAV_WIDTH / 2}px`,
-    height: `${STYLES.NAV_WIDTH / 2}px`,
-    fontSize: 16,
-    margin: '0 10px',
+    lineHeight: `12px`,
+    height: `${STYLES.NAV_WIDTH}px`,
     textDecoration: 'none',
+  },
+  logoNav: {
+    height: STYLES.TITLE_HEIGHT,
+    backgroundColor: STYLES.LIGHT_MEDIUM_GRAY
+  },
+  navIcon: {
+    flexBasis: '100%',
+    order: 0,
+    fontSize: 20,
+  },
+  navLabel: {
+    flexBasis: '100%',
+    order: 1,
+    color: STYLES.OFF_WHITE,
+    fontSize: 14,
+    fontWeight: 100,
+    letterSpacing: 1,
   }
 }
 
+const NavLink = ({ to, style, label, icon }) => {
+  const iconLink = (
+    <Link to={to} style={styling.navItem}>
+      <div style={styling.navLabel}>{label}</div>
+      <div style={styling.navIcon}><i className={`fa fa-${icon}`}></i></div>
+    </Link>
+  )
+  return (icon)
+    ? iconLink
+    : <Link to={to} style={styling.navItem}>{label}</Link>
+};
+
 const homeNav = {
   ...styling.navItem,
-  backgroundColor: STYLES.PRIMARY
+  height: STYLES.TITLE_HEIGHT,
+  backgroundColor: STYLES.DARKER_GRAY
 }
 
 class Header extends Component {
@@ -49,8 +77,8 @@ class Header extends Component {
     const username = this.props.currentUser.username;
     return (
       <div className="navbar contain">
-        <Link to="/" style={styling.navItem}>ROLO</Link>
-        <Link to={`/${username}`} style={styling.navItem}>View Resume</Link>
+        <Link to="/" style={homeNav}>ROLO</Link>
+        <NavLink to={`/${username}`} icon="eye" label="VIEW"></NavLink>
         <Link to={`/${username}/edit`} style={styling.navItem}>Edit Resume</Link>
         <Link to="/templates" style={styling.navItem}>Templates</Link>
         <Link to="/signout" style={styling.navItem}>Sign Out</Link>

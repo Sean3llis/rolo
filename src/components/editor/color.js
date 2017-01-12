@@ -7,8 +7,8 @@ const colors = [
   STYLES.DARK_GRAY,
   '#4f5f65',
   STYLES.MEDIUM_GRAY,
-  STYLES.PRIMARY,
   STYLES.DANGER,
+  '#f09348',
   STYLES.WARNING,
   '#409c95',
   '#3e86bb',
@@ -21,8 +21,9 @@ class ColorPicker extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangeComplete = this.handleChangeComplete.bind(this);
+    console.log('this.props.initialColor ~~>', this.props.initialColor);
     this.state = {
-      color: this.props.color || STYLES.PRIMARY
+      color: this.props.initialColor
     };
   };
 
@@ -32,15 +33,16 @@ class ColorPicker extends React.Component {
   };
 
   componentWillMount() {
-    console.log('mounting, color is ', this.props.color);
+    console.log('mounting, color is ', this.props.initialColor);
+    this.setState({color: this.props.initialColor});
   }
 
   componentDidMount() {
-    console.log('this.state.color ~~>', this.state.color);
-    if (!this.props.color) this.handleChangeComplete({hex: this.state.color});
+    if (!this.props.initialColor) this.handleChangeComplete({hex: this.state.color});
   }
 
   render() {
+    if (!this.props.initialColor) return null;
     return (
       <div>
       <input type="hidden" {...this.props.input} />

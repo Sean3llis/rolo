@@ -1,3 +1,4 @@
+export const DARKER_GRAY = '#2f383d';
 export const DARK_GRAY = '#32444a';
 export const MEDIUM_GRAY = '#8e9ba2';
 export const LIGHT_MEDIUM_GRAY = '#e6e6e6';
@@ -9,7 +10,8 @@ export const INFO = '#2f7baf';
 export const DANGER = '#f05d48';
 export const WARNING = '#f2d142';
 
-export const NAV_WIDTH = 140;
+export const NAV_WIDTH = 80;
+export const TITLE_HEIGHT = 40;
 
 export const BORDER = `2px solid rgba(0,0,0,0.3)`;
 

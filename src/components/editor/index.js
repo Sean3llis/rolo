@@ -55,8 +55,9 @@ const styling = {
   },
   titleBar: {
     backgroundColor: STYLES.DARK_GRAY,
+    color: STYLES.OFF_WHITE,
     textAlign: 'center',
-    height: 40,
+    height: STYLES.TITLE_HEIGHT,
     lineHeight: '40px'
   },
   editBar: {
@@ -73,8 +74,8 @@ class ResumeEditor extends Component {
   }
 
   handleFormSubmit(formData) {
-    console.log('submitted: ~~>', formData);
     this.props.updateUser(formData, this.props.currentUser._id);
+    localStorage.setItem('CURRENT_USER', JSON.stringify(formData));
   }
 
   render() {
@@ -84,7 +85,7 @@ class ResumeEditor extends Component {
       <div id="editor">
       <div id="editor-row" className="row">
       <div className="col-sm-4" style={styling.formArea}>
-        <div style={styling.titleBar}><i className="fa fa-eye"></i></div>
+        <div style={styling.titleBar}><i className="fa fa-pencil-square-o"></i> EDIT PROFILE</div>
         <div className="form-inner" style={styling.formInner}>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 
@@ -112,7 +113,7 @@ class ResumeEditor extends Component {
 
           <fieldset>
             <Label htmlFor="color">Theme Color</Label>
-            <Field name="color" color={this.props.currentUser.color} component={ColorPicker} />
+            <Field name="color" initialColor={this.props.currentUser.color} component={ColorPicker} />
           </fieldset>
 
           <fieldset>
