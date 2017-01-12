@@ -19,6 +19,12 @@ import Label from './label';
 import resumeData from '../resume/mock-resume';
 import Classic from '../templates/classic';
 
+const userDefaults = {
+  name: 'YOUR NAME',
+  color: STYLES.PRIMARY,
+  blurb: 'Write something about yourself'
+}
+
 /**
  * CONFIGS:
  */
@@ -72,7 +78,7 @@ class ResumeEditor extends Component {
   }
 
   render() {
-    console.log('this.props.currentUser.color ~~>', this.props.currentUser.color);
+    if (!this.props.currentUser) return null;
     const { handleSubmit, pristine, submitting, reset } = this.props;
     return (
       <div id="editor">
@@ -138,7 +144,7 @@ function mapStateToProps(state = {}) {
   let newState = {
     message: state.auth.message,
     currentUser: state.auth.currentUser,
-    initialValues: {...state.auth.currentUser}
+    initialValues: {...userDefaults, ...state.auth.currentUser}
   };
   if (state.form && state.form.editor) newState.formData = state.form.editor.values;
   return newState;
@@ -146,8 +152,17 @@ function mapStateToProps(state = {}) {
 
 ResumeEditor = reduxForm({
   form: 'editor',
-  fields: ['name', 'blurb', 'color', 'projects', 'github', 'twitter', 'linkedin', 'email', ],
-  enableReinitialize: true
+  enableReinitialize: true,
+  fields: [
+    'name',
+    'blurb',
+    'color',
+    'projects',
+    'github',
+    'twitter',
+    'linkedin',
+    'email'
+  ],
 })(ResumeEditor);
 
 ResumeEditor = connect(mapStateToProps, actions)(ResumeEditor)

@@ -70,6 +70,7 @@ class ClassicTemplate extends Component {
   }
 
   stampProjects(projects) {
+    console.log('projects');
     const projectNodes = [];
     for (var i = 0; i < projects.length; i++) {
       let currentProject = projects[i];
@@ -127,7 +128,7 @@ class ClassicTemplate extends Component {
           </div>
         </div>
         <div className="projects-container">
-          {this.stampProjects(projects)}
+          {this.stampProjects(this.props.formData.projects)}
         </div>
       </div>
       </div>

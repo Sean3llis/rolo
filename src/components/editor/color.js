@@ -21,10 +21,9 @@ class ColorPicker extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangeComplete = this.handleChangeComplete.bind(this);
-  };
-
-  state = {
-    color: this.props.color
+    this.state = {
+      color: this.props.color || STYLES.PRIMARY
+    };
   };
 
   handleChangeComplete(color) {
@@ -33,13 +32,18 @@ class ColorPicker extends React.Component {
   };
 
   componentWillMount() {
-    this.setState({color: this.props.color})
+    console.log('mounting, color is ', this.props.color);
+  }
+
+  componentDidMount() {
+    console.log('this.state.color ~~>', this.state.color);
+    if (!this.props.color) this.handleChangeComplete({hex: this.state.color});
   }
 
   render() {
     return (
       <div>
-      <input onChange={e => console.log(e)}type="hidden" {...this.props.input} />
+      <input type="hidden" {...this.props.input} />
       <BlockPicker
         color={this.state.color}
         colors={colors}

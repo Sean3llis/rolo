@@ -102,7 +102,7 @@ class ClassicTemplate extends Component {
 
   render() {
     const { name, title, blurb, contacts, skills, projects } = this.props.data;
-    if (!this.props.formData) return null;
+    if (!this.props.formData || !this.props.formData.projects) return null;
     return (
       <div id="resume">
         <div id="nameplate" style={{...styling.nameplate, backgroundColor: this.props.formData.color}}>
@@ -125,7 +125,7 @@ class ClassicTemplate extends Component {
           </div>
         </div>
         <div className="projects-container">
-          {this.stampProjects(projects)}
+          {this.stampProjects(this.props.formData.projects)}
         </div>
       </div>
     );
