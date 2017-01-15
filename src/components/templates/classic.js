@@ -53,6 +53,30 @@ const styling = {
     fontSize: 14,
     top: 0,
     left: 0
+  },
+  project: {
+    position: 'relative',
+    margin: '20px 0px'
+  },
+  projectBorder: {
+    backgroundColor: STYLES.LIGHT_MEDIUM_GRAY,
+    position: 'absolute',
+    height: '100%',
+    width: 2,
+    left: -10
+  },
+  projectDivider: {
+    backgroundColor: STYLES.LIGHT_MEDIUM_GRAY,
+    position: 'absolute',
+    height: 2,
+    width: 100,
+    margin: 'auto',
+    left: 0,
+    right: 0,
+    bottom: -10
+  },
+  projectTitle: {
+    marginBottom: 4
   }
 };
 
@@ -73,14 +97,14 @@ class ClassicTemplate extends Component {
     for (var i = 0; i < projects.length; i++) {
       let currentProject = projects[i];
       projectNodes.push(
-        <div className="contain" key={i}>
-          <div className="project">
-            <a href={currentProject.link} target="_blank">
-            <h4>{currentProject.title} <i>{currentProject.blurb}</i></h4>
-            <div>{currentProject.description}</div>
-            </a>
-            <hr/>
+        <div key={i} className="project" style={styling.project}>
+          <a href={currentProject.link} target="_blank" style={{textDecoration: 'none'}}>
+          <h2 style={styling.projectTitle}>{currentProject.title}</h2>
+          <div style={{position: 'relative'}}>
+            <div className="project-border" style={styling.projectBorder}></div>
+            {currentProject.description}
           </div>
+          </a>
         </div>
       );
     }
@@ -123,7 +147,7 @@ class ClassicTemplate extends Component {
             {this.props.formData.blurb}
           </div>
         </div>
-        <div className="projects-container">
+        <div className="projects-container contain">
           {this.stampProjects(this.props.formData.projects)}
         </div>
       </div>
