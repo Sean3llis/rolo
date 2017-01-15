@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, propTypes } from 'react';
 import { Field, FieldArray, reduxForm } from 'redux-form';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import * as STYLES from '../styles';
@@ -42,10 +43,13 @@ const styling = {
     height: '100%',
     padding: 0
   },
+  form: {
+    position: 'relative',
+  },
   formInner: {
     overflowY: 'scroll',
     height: window.innerHeight,
-    padding: '0px 20px'
+    padding: '40px 20px',
   },
   previewArea: {
     backgroundColor: STYLES.LIGHT_GRAY,
@@ -54,45 +58,65 @@ const styling = {
     height: window.innerHeight
   },
   titleBar: {
+    position: 'relative',
     backgroundColor: STYLES.DARK_GRAY,
     color: STYLES.OFF_WHITE,
     textAlign: 'center',
     height: STYLES.TITLE_HEIGHT,
-    lineHeight: '40px'
+    lineHeight: '40px',
+    fontSize: 14,
+    letterSpacing: 2
   },
   editBar: {
     borderRight: STYLES.BORDER
+  },
+  lowerSubmit: {
+    position: 'relative',
+    height: 40,
+    fontSize: 14,
+    letterSpacing: 2,
+    lineHeight: '16px',
+    width: '100%'
   }
 };
 
 class ResumeEditor extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-  }
-
   handleFormSubmit(formData) {
     this.props.updateUser(formData, this.props.currentUser._id);
     localStorage.setItem('CURRENT_USER', JSON.stringify(formData));
+    browserHistory.push(`/${this.props.currentUser.username}/edit`);
+    console.log('browserHistory ~~>', browserHistory);
   }
 
   render() {
     if (!this.props.currentUser) return null;
-    const { handleSubmit, pristine, submitting, reset } = this.props;
+    const { handleSubmit, pristine, submitting, reset, submit } = this.props;
+    const currentColor = this.props.form || this.props.currentUser.color;
     return (
       <div id="editor">
       <div id="editor-row" className="row">
       <div className="col-sm-4" style={styling.formArea}>
-        <div style={styling.titleBar}><i className="fa fa-pencil-square-o"></i> EDIT PROFILE</div>
+        <div style={styling.titleBar}>
+          <i className="fa fa-pencil-square-o"></i> EDIT PROFILE
+          <Submit color={this.props.currentUser.color} onClick={handleSubmit(this.handleFormSubmit.bind(this))} disabled={pristine || submitting}>Save</Submit>
+        </div>
         <div className="form-inner" style={styling.formInner}>
-        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+        <form id="editor" style={styling.form}>
 
-          <fieldset>
-            <Label htmlFor="name">Name</Label>
-            <Field name="name" component={textInput} />
-          </fieldset>
+          <div className="row">
+            <div className="col-sm-6" style={{paddingLeft: 0}}>
+            <fieldset>
+              <Label htmlFor="name">Name</Label>
+              <Field name="name" component={textInput} />
+            </fieldset>
+            </div>
+            <div className="col-sm-6" style={{paddingRight: 0}}>
+            <fieldset>
+              <Label htmlFor="title">Title</Label>
+              <Field name="title" component={textInput} />
+            </fieldset>
+            </div>
+          </div>
 
           <fieldset>
             <Label htmlFor="blurb">Blurb</Label>
@@ -106,6 +130,7 @@ class ResumeEditor extends Component {
                 key={i}
                 name={contact.name}
                 icon={contact.icon}
+                color={this.props.currentUser.color}
                 placeHolder={contact.placeHolder}
                 component={ContactInput} />
             ))}
@@ -125,13 +150,12 @@ class ResumeEditor extends Component {
             <FieldArray name="projects" component={renderProjects}/>
           </fieldset>
 
-          <Submit disabled={pristine || submitting}>Save</Submit>
-
+          <Submit style={styling.lowerSubmit} onClick={handleSubmit(this.handleFormSubmit.bind(this))} disabled={pristine || submitting}>Save</Submit>
         </form>
         </div>
         </div>
         <div className="col-sm-8" style={styling.previewArea}>
-        <div style={styling.titleBar}><i className="fa fa-eye"></i></div>
+        <div style={styling.titleBar}><i className="fa fa-eye"></i> PREVIEW PROFILE</div>
 
           <Classic viewingUser={this.props.currentUser} formData={this.props.formData} data={resumeData} />
         </div>
@@ -156,6 +180,7 @@ ResumeEditor = reduxForm({
   enableReinitialize: true,
   fields: [
     'name',
+    'title',
     'blurb',
     'color',
     'projects',

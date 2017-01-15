@@ -16,9 +16,9 @@ const styling = {
     fontSize: 100,
     lineHeight: '100px',
     textAlign: 'center',
-    fontFamily: 'Roboto Slab',
     fontWeight: 'bold',
     color: STYLES.OFF_WHITE,
+    whiteSpace: 'nowrap'
   },
   title: {
     textAlign: 'center',
@@ -41,7 +41,6 @@ const styling = {
     overflow: 'hidden',
     marginRight: STYLES.CONTACT.padding,
     marginBottom: STYLES.CONTACT.padding,
-    borderBottom: '2px solid #32444a'
   },
   contactIcon: {
     textAlign: 'center',
@@ -76,8 +75,10 @@ class ClassicTemplate extends Component {
       projectNodes.push(
         <div className="contain" key={i}>
           <div className="project">
+            <a href={currentProject.link} target="_blank">
             <h4>{currentProject.title} <i>{currentProject.blurb}</i></h4>
-            <div>{currentProject.body}</div>
+            <div>{currentProject.description}</div>
+            </a>
             <hr/>
           </div>
         </div>
@@ -106,10 +107,8 @@ class ClassicTemplate extends Component {
     return (
       <div id="resume">
         <div id="nameplate" style={{...styling.nameplate, backgroundColor: this.props.formData.color}}>
-          <div className="contain">
-            <div id="name" style={styling.name}>{this.props.formData.name}</div>
-            <div style={styling.title}>{title}</div>
-          </div>
+          <div id="name" style={styling.name}>{this.props.formData.name}</div>
+          <div style={styling.title}>{this.props.formData.title}</div>
         </div>
         <div id="contacts" style={styling.contacts}>
           <div className="contain">

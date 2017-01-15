@@ -7,11 +7,13 @@ const colors = [
   STYLES.DARK_GRAY,
   '#4f5f65',
   STYLES.MEDIUM_GRAY,
+  '#a33030',
   STYLES.DANGER,
   '#f09348',
   STYLES.WARNING,
   '#409c95',
   '#3e86bb',
+  '#366497',
   '#485182',
   '#594971',
   '#ad4d78'

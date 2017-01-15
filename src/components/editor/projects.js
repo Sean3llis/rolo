@@ -7,7 +7,7 @@ import TextInput from './input.text';
 import TextAreaInput from './input.textarea';
 const styling = {
   add: {
-    backgroundColor: STYLES.PRIMARY,
+    backgroundColor: STYLES.DARK_GRAY,
     color: STYLES.OFF_WHITE,
     borderRadius: '2px 2px 0px 0px'
   },
@@ -15,33 +15,31 @@ const styling = {
     position: 'relative',
     backgroundColor: STYLES.LIGHT_GRAY,
     padding: '30px 10px',
-    marginBottom: 6
-  },
-  projectRow: {
-    marginBottom: 10
+    marginBottom: 6,
+    marginTop: 6,
+    borderBottom: STYLES.BORDER_SHADOW
   },
   delete: {
     position: 'absolute',
     width: 'auto',
     top: 0,
-    left: -20,
-    padding: 2,
+    left: 0,
     fontSize: 12,
-    lineHeight: '12px',
+    lineHeight: '20px',
+    padding: 0,
+    height: 20,
+    width: 20,
+    borderRadius: 0,
     backgroundColor: STYLES.DANGER,
     color: STYLES.OFF_WHITE,
   },
   counter: {
     position: 'absolute',
-    left: -20,
     top: 20,
-    color: STYLES.MEDIUM_GRAY
+    color: STYLES.OFF_WHITE,
+    backgroundColor: STYLES.DARK_GRAY,
+    textAlign: 'center'
   },
-  projectLabel: {
-    marginBottom: 0,
-    marginTop: 10,
-    textAlign: 'right'
-  }
 };
 
 
@@ -53,39 +51,38 @@ export default ({ fields, meta: { touched, error } }) => (
     {touched && error && <span>{error}</span>}
     {fields.map((project, i) => (
       <div className="project" key={i} style={styling.project}>
+        <div className="counter" style={{...styling.delete, ...styling.counter}}>{i + 1}</div>
         <button
           type="button"
           title="Remove Member"
           style={styling.delete}
-          onClick={() => fields.remove(i)}><i className="fa fa-times"></i></button>
-        <div className="counter" style={styling.counter}>{i + 1}</div>
-        <div className="row" style={styling.projectRow}>
-          <div className="col-sm-2"><Label style={styling.projectLabel}>Title</Label></div>
-          <div className="col-sm-10">
-            <Field
-              name={`${project}.title`}
-              type="text"
-              component={TextInput} />
-          </div>
-        </div>
-        <div className="row" style={styling.projectRow}>
-          <div className="col-sm-2"><Label style={styling.projectLabel}>Link</Label></div>
-          <div className="col-sm-10">
-            <Field
-              name={`${project}.link`}
-              type="text"
-              component={TextInput} />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-2"><Label style={styling.projectLabel}>Description</Label></div>
-          <div className="col-sm-10">
-            <Field
+          onClick={() => fields.remove(i)}>
+          <i className="fa fa-times"></i>
+        </button>
+
+        <fieldset>
+          <Label style={styling.projectLabel}>Title</Label>
+          <Field
+            name={`${project}.title`}
+            type="text"
+            component={TextInput} />
+        </fieldset>
+
+        <fieldset>
+          <Label style={styling.projectLabel}>Link</Label>
+          <Field
+            name={`${project}.link`}
+            type="text"
+            component={TextInput} />
+        </fieldset>
+
+        <fieldset>
+          <Label style={styling.projectLabel}>Description</Label>
+          <Field
               name={`${project}.description`}
               type="textarea"
               component={TextAreaInput}/>
-          </div>
-        </div>
+        </fieldset>
       </div>
     ))}
   </div>

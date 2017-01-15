@@ -116,3 +116,7 @@ export function getUser(username) {
     })
   }
 }
+
+export function setThemeColor() {
+  
+}

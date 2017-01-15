@@ -20,10 +20,13 @@ const styling = {
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
+    justifyContent: 'center',
     textAlign: 'center',
     lineHeight: `12px`,
-    height: `${STYLES.NAV_WIDTH}px`,
+    height: 70,
     textDecoration: 'none',
+    borderBottom: `1px solid ${STYLES.DARKER_GRAY}`,
+    padding: '10px 0px'
   },
   logoNav: {
     height: STYLES.TITLE_HEIGHT,
@@ -32,14 +35,12 @@ const styling = {
   navIcon: {
     flexBasis: '100%',
     order: 0,
-    fontSize: 20,
   },
   navLabel: {
     flexBasis: '100%',
     order: 1,
     color: STYLES.OFF_WHITE,
     fontSize: 14,
-    fontWeight: 100,
     letterSpacing: 1,
   }
 }
@@ -62,6 +63,10 @@ const homeNav = {
   backgroundColor: STYLES.DARKER_GRAY
 }
 
+const HomeLink = props => {
+  return (<Link to="/" style={homeNav}>ROLO</Link>);
+}
+
 class Header extends Component {
   defaultNav() {
     return (
@@ -77,12 +82,11 @@ class Header extends Component {
     const username = this.props.currentUser.username;
     return (
       <div className="navbar contain">
-        <Link to="/" style={homeNav}>ROLO</Link>
-        <NavLink to={`/${username}`} icon="eye" label="VIEW"></NavLink>
-        <Link to={`/${username}/edit`} style={styling.navItem}>Edit Resume</Link>
-        <Link to="/templates" style={styling.navItem}>Templates</Link>
-        <Link to="/signout" style={styling.navItem}>Sign Out</Link>
-        <Link to="/settings" style={styling.navItem}><i className="fa fa-gear"></i></Link>
+        <HomeLink to="/" style={homeNav}>ROLO</HomeLink>
+        <NavLink to={`/${username}`} icon="address-card" label="VIEW"></NavLink>
+        <NavLink to={`/${username}/edit`} icon="pencil" label="Edit"></NavLink>
+        <NavLink to="/templates" icon="paint-brush" label="Templates"></NavLink>
+        <NavLink to="/signout" icon="user-times" label="Log Out"></NavLink>
       </div>
     );
   }

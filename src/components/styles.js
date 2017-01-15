@@ -1,9 +1,11 @@
 export const DARKER_GRAY = '#2f383d';
 export const DARK_GRAY = '#32444a';
-export const MEDIUM_GRAY = '#8e9ba2';
+export const MEDIUM_GRAY = '#888e92';
 export const LIGHT_MEDIUM_GRAY = '#e6e6e6';
 export const LIGHT_GRAY = '#f5f5f5';
 export const OFF_WHITE = '#f4f4f4';
+export const SHADOW = '#d7d7d7';
+export const BORDER_SHADOW = `1px solid ${SHADOW}`;
 
 export const PRIMARY = '#2aa079';
 export const INFO = '#2f7baf';
