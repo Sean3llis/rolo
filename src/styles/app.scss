@@ -105,7 +105,7 @@ button:disabled {
   line-height: 0;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
-  border-left: 4px solid #666;
+  border-left: 4px solid #f7f7f7;
   vertical-align: middle;
   margin-right: 8px;
 }
@@ -125,6 +125,6 @@ button:disabled {
 .rc-collapse > .rc-collapse-item-active > .rc-collapse-header .arrow {
   border-left: 3px solid transparent;
   border-right: 3px solid transparent;
-  border-top: 4px solid #666;
+  border-top: 4px solid #f7f7f7;
   margin-right: 6px;
 }

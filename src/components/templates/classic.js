@@ -76,7 +76,7 @@ const styling = {
     bottom: -10
   },
   projectTitle: {
-    marginBottom: 4
+    marginBottom: 4,
   }
 };
 
