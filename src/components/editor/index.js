@@ -136,15 +136,17 @@ class ResumeEditor extends Component {
 
           <fieldset>
             <Label htmlFor="contacts">Contacts</Label>
-            {contactFields.map((contact, i) => (
-              <Field
-                key={i}
-                name={contact.name}
-                icon={contact.icon}
-                color={this.props.themeColor}
-                placeHolder={contact.placeHolder}
-                component={ContactInput} />
-            ))}
+            {contactFields.map((contact, i) => {
+              return (
+                <Field
+                  key={i}
+                  name={contact.name}
+                  icon={contact.icon}
+                  color={this.props.themeColor}
+                  placeHolder={contact.placeHolder}
+                  component={ContactInput} />
+              )
+            })}
           </fieldset>
 
           {this.renderColorPicker()}
@@ -158,14 +160,19 @@ class ResumeEditor extends Component {
             <FieldArray name="projects" component={renderProjects}/>
           </fieldset>
 
-          <Submit style={styling.lowerSubmit} onClick={handleSubmit(this.handleFormSubmit.bind(this))} disabled={pristine || submitting}>Save</Submit>
+          <Submit
+            color={this.props.themeColor}
+            style={styling.lowerSubmit}
+            onClick={handleSubmit(this.handleFormSubmit.bind(this))}
+            disabled={pristine || submitting}>
+            Save
+          </Submit>
         </form>
         </div>
         </div>
         <div className="col-sm-8" style={styling.previewArea}>
         <div style={styling.titleBar}><i className="fa fa-eye"></i> PREVIEW PROFILE</div>
-
-          <Classic viewingUser={this.props.currentUser} formData={this.props.formData} data={resumeData} />
+          <Classic viewingUser={this.props.currentUser} data={this.props.formData} />
         </div>
       </div>
       </div>
@@ -196,7 +203,8 @@ ResumeEditor = reduxForm({
     'github',
     'twitter',
     'linkedin',
-    'email'
+    'email',
+    'phone'
   ],
 })(ResumeEditor);
 

@@ -45,33 +45,30 @@ const styling = {
   }
 }
 
-const NavLink = ({ to, style, label, icon }) => {
-  const iconLink = (
-    <Link to={to} style={styling.navItem}>
-      <div style={styling.navLabel}>{label}</div>
-      <div style={styling.navIcon}><i className={`fa fa-${icon}`}></i></div>
-    </Link>
-  )
-  return (icon)
-    ? iconLink
-    : <Link to={to} style={styling.navItem}>{label}</Link>
-};
-
 const homeNav = {
   ...styling.navItem,
   height: STYLES.TITLE_HEIGHT,
-  backgroundColor: STYLES.DARKER_GRAY
 }
 
 const HomeLink = props => {
-  return (<Link to="/" style={homeNav}>ROLO</Link>);
+  return <Link to="/" style={{...homeNav, backgroundColor: props.color || STYLES.DARKER_GRAY}}>ROLO</Link>;
 }
+
+const NavLink = props => {
+  const { to, style, label, icon, color } = props;
+  return (
+    <Link to={to} style={styling.navItem} activeStyle={{borderRight: `4px solid ${color || STYLES.OFF_WHITE}`}}>
+      <div style={styling.navLabel}>{label}</div>
+      <div style={styling.navIcon}><i className={`fa fa-${icon}`}></i></div>
+    </Link>
+  );
+};
 
 class Header extends Component {
   defaultNav() {
     return (
       <div className="navbar contain">
-        <Link to="/" style={homeNav}>ROLO</Link>
+        <HomeLink>ROLO</HomeLink>
         <Link to="/signin" style={styling.navItem}>Sign In</Link>
         <Link to="/signup" style={styling.navItem}>Sign Up</Link>
       </div>
@@ -82,11 +79,11 @@ class Header extends Component {
     const username = this.props.currentUser.username;
     return (
       <div className="navbar contain">
-        <HomeLink to="/" style={homeNav}>ROLO</HomeLink>
-        <NavLink to={`/${username}`} icon="address-card" label="VIEW"></NavLink>
-        <NavLink to={`/${username}/edit`} icon="pencil" label="Edit"></NavLink>
-        <NavLink to="/templates" icon="paint-brush" label="Templates"></NavLink>
-        <NavLink to="/signout" icon="user-times" label="Log Out"></NavLink>
+        <HomeLink color={this.props.themeColor}>ROLO</HomeLink>
+        <NavLink to={`/${username}`} icon="address-card" label="VIEW" color={this.props.themeColor}/>
+        <NavLink to={`/${username}/edit`} icon="pencil" label="Edit" color={this.props.themeColor}/>
+        <NavLink to="/templates" icon="paint-brush" label="Templates" color={this.props.themeColor}/>
+        <NavLink to="/signout" icon="user-times" label="Log Out" color={this.props.themeColor}/>
       </div>
     );
   }
@@ -109,7 +106,8 @@ class Header extends Component {
 function mapStateToProps(state = {}) {
   return {
     authenticated: state.auth.authenticated,
-    currentUser: state.auth.currentUser
+    currentUser: state.auth.currentUser,
+    themeColor: state.resume.themeColor
   };
 }
 

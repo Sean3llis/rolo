@@ -13,28 +13,16 @@ const submitStyles = {
   right: 0,
 }
 
-const enabledStyles = {
-  ...submitStyles,
-  backgroundColor: STYLES.DARK_GRAY,
-}
-
-const disabledStyles = {
-  ...submitStyles,
-  backgroundColor: STYLES.LIGHT_MEDIUM_GRAY,
-  color: STYLES.MEDIUM_GRAY,
-}
 export default props => {
-  const styling = (props.disabled)
-    ? disabledStyles
-    : enabledStyles;
-  const color = (props.color)
-    ? color
-    : STYLES.PRIMARY
+  const style = (props.disabled)
+  ? {...submitStyles, backgroundColor: STYLES.LIGHT_MEDIUM_GRAY, color: STYLES.MEDIUM_GRAY}
+  : {...submitStyles, backgroundColor: props.color || STYLES.DARK_GRAY}
+  console.log('style.backgroundColor ~~>', style.backgroundColor);
   return (
     <button
       onClick={e => props.onClick(e)}
       action="submit"
-      style={{...styling, ...props.style}}
+      style={{...style, ...props.style}}
       disabled={props.disabled}>
         Save
     </button>

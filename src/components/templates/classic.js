@@ -55,7 +55,8 @@ const styling = {
     width: STYLES.LABEL.height,
     fontSize: 14,
     top: 0,
-    left: 0
+    left: 0,
+    borderRadius: 2
   },
   project: {
     position: 'relative',
@@ -118,11 +119,12 @@ class ClassicTemplate extends Component {
   }
 
   stampContacts(contacts) {
+    if (!contacts) return null;
     const contactNodes = [];
     for (var i = 0; i < contacts.length; i++) {
       let currentContact = contacts[i];
       contactNodes.push(
-        <span style={{...styling.contactNode, backgroundColor: this.props.formData.color}} key={i}>
+        <span style={{...styling.contactNode, backgroundColor: this.props.data.color}} key={i}>
           <i className={classNames('fa', `fa-${currentContact.icon}`)} style={styling.contactIcon}></i>
           {currentContact.value}
         </span>
@@ -132,13 +134,13 @@ class ClassicTemplate extends Component {
   }
 
   render() {
+    if (!this.props.data) return null;
     const { name, title, blurb, contacts, skills, projects } = this.props.data;
-    if (!this.props.formData || !this.props.formData.projects) return null;
     return (
       <div id="resume">
-        <div id="nameplate" style={{...styling.nameplate, backgroundColor: this.props.formData.color}}>
-          <div id="name" style={styling.name}>{this.props.formData.name}</div>
-          <div style={styling.title}>{this.props.formData.title}</div>
+        <div id="nameplate" style={{...styling.nameplate, backgroundColor: this.props.data.color}}>
+          <div id="name" style={styling.name}>{this.props.data.name}</div>
+          <div style={styling.title}>{this.props.data.title}</div>
         </div>
         <div className="contain">
         <div id="contacts" style={styling.contacts}>
@@ -149,11 +151,11 @@ class ClassicTemplate extends Component {
         </div> */}
         <div id="blurb" style={styling.blurb}>
           <div className="contain">
-            {this.props.formData.blurb}
+            {this.props.data.blurb}
           </div>
         </div>
         <div className="projects-container contain">
-          {this.stampProjects(this.props.formData.projects)}
+          {this.stampProjects(this.props.data.projects)}
         </div>
         </div>
       </div>
