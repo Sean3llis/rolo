@@ -29,10 +29,9 @@ const styling = {
 
 export default field => {
   const iconClass = `fa fa-${field.icon}`;
-  styling.icon.backgroundColor = (field.color) ? field.color : STYLES.DARK_GRAY;
   return (
     <div className="input-row" style={styling.row}>
-      <div style={styling.icon}><i className={iconClass} style={styling.span}></i></div>
+      <div style={{...styling.icon, backgroundColor: field.color}}><i className={iconClass} style={styling.span}></i></div>
       <input {...field.input} type="text" style={styling.input} placeholder={field.placeHolder} />
     </div>
   );

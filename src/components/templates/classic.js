@@ -6,7 +6,9 @@ const styling = {
 
   },
   blurb: {
-    padding: '20px 0px'
+    padding: '20px 0px',
+    borderTop: STYLES.BORDER_SHADOW,
+    borderBottom: STYLES.BORDER_SHADOW,
   },
   nameplate: {
     backgroundColor: STYLES.PRIMARY,
@@ -28,9 +30,8 @@ const styling = {
   },
   contacts: {
     padding: `${STYLES.CONTACT.padding}px 0px 0px 0px`,
-    display: 'flex',
-    alignContent: 'flex-end',
-    fontSize: 0
+    fontSize: 0,
+    textAlign: 'center'
   },
   contactNode: {
     ...STYLES.LABEL,
@@ -39,8 +40,10 @@ const styling = {
     color: STYLES.OFF_WHITE,
     position: 'relative',
     overflow: 'hidden',
+    minWidth: 200,
     marginRight: STYLES.CONTACT.padding,
     marginBottom: STYLES.CONTACT.padding,
+    textAlign: 'left'
   },
   contactIcon: {
     textAlign: 'center',
@@ -56,27 +59,22 @@ const styling = {
   },
   project: {
     position: 'relative',
-    margin: '20px 0px'
+    margin: '40px 0px'
   },
   projectBorder: {
-    backgroundColor: STYLES.LIGHT_MEDIUM_GRAY,
+    backgroundColor: STYLES.SHADOW,
     position: 'absolute',
     height: '100%',
     width: 2,
     left: -10
   },
-  projectDivider: {
-    backgroundColor: STYLES.LIGHT_MEDIUM_GRAY,
-    position: 'absolute',
-    height: 2,
-    width: 100,
-    margin: 'auto',
-    left: 0,
-    right: 0,
-    bottom: -10
-  },
   projectTitle: {
+    margin: 0,
     marginBottom: 4,
+  },
+  projectLink: {
+    fontSize: 16,
+    fontStyle: 'italic'
   }
 };
 
@@ -96,15 +94,23 @@ class ClassicTemplate extends Component {
     const projectNodes = [];
     for (var i = 0; i < projects.length; i++) {
       let currentProject = projects[i];
+      let title = (!currentProject.link)
+        ? (<h2 style={styling.projectTitle}>{currentProject.title}</h2>)
+        : (
+          <h2 style={styling.projectTitle}>
+            <a href={currentProject.link} target="_blank" style={{textDecoration: 'none'}}>
+            {currentProject.title} |
+            <span style={styling.projectLink}>  <i className="fa fa-link" style={{color: STYLES.MEDIUM_GRAY}}></i> Link</span>
+            </a>
+          </h2>
+        );
       projectNodes.push(
         <div key={i} className="project" style={styling.project}>
-          <a href={currentProject.link} target="_blank" style={{textDecoration: 'none'}}>
-          <h2 style={styling.projectTitle}>{currentProject.title}</h2>
+          {title}
           <div style={{position: 'relative'}}>
             <div className="project-border" style={styling.projectBorder}></div>
             {currentProject.description}
           </div>
-          </a>
         </div>
       );
     }
@@ -134,10 +140,9 @@ class ClassicTemplate extends Component {
           <div id="name" style={styling.name}>{this.props.formData.name}</div>
           <div style={styling.title}>{this.props.formData.title}</div>
         </div>
+        <div className="contain">
         <div id="contacts" style={styling.contacts}>
-          <div className="contain">
             {this.stampContacts(contacts)}
-          </div>
         </div>
         {/* <div className="skill-container contain">
           {this.stampSkills(skills)}
@@ -149,6 +154,7 @@ class ClassicTemplate extends Component {
         </div>
         <div className="projects-container contain">
           {this.stampProjects(this.props.formData.projects)}
+        </div>
         </div>
       </div>
     );

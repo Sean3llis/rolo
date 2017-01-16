@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { BlockPicker } from 'react-color';
+import * as actions from '../../actions';
 import * as STYLES from '../styles';
 
 const colors = [
@@ -11,6 +13,7 @@ const colors = [
   STYLES.DANGER,
   '#f09348',
   STYLES.WARNING,
+  '#439f58',
   '#409c95',
   '#3e86bb',
   '#366497',
@@ -23,28 +26,20 @@ class ColorPicker extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangeComplete = this.handleChangeComplete.bind(this);
-    console.log('this.props.initialColor ~~>', this.props.initialColor);
     this.state = {
-      color: this.props.initialColor
+      color: props.initialColor
     };
   };
 
-  handleChangeComplete(color) {
-    this.props.input.onChange(color.hex);
-    this.setState({color: color.hex});
+  handleChangeComplete(payload) {
+    const color = payload.hex;
+    this.props.input.onChange(color);
+    this.setState({color});
+    this.props.setThemeColor(color);
   };
 
-  componentWillMount() {
-    console.log('mounting, color is ', this.props.initialColor);
-    this.setState({color: this.props.initialColor});
-  }
-
-  componentDidMount() {
-    if (!this.props.initialColor) this.handleChangeComplete({hex: this.state.color});
-  }
-
   render() {
-    if (!this.props.initialColor) return null;
+    if (!this.props.themeColor) return null;
     return (
       <div>
       <input type="hidden" {...this.props.input} />
@@ -60,4 +55,10 @@ class ColorPicker extends React.Component {
   };
 }
 
-export default ColorPicker;
+function mapStateToProps(state = {}) {
+  return {
+    themeColor: state.resume.themeColor
+  }
+}
+
+export default connect(mapStateToProps, actions)(ColorPicker);

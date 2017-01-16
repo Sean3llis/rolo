@@ -94,6 +94,7 @@ export function authenticateUser() {
       headers: { authorization: localStorage.getItem(TOKEN)}
     })
     .then(response => {
+      if (response.data && response.data.color) dispatch(setThemeColor(response.data.color));
       dispatch({
         type: actions.AUTH_USER,
         payload: response.data
@@ -117,6 +118,10 @@ export function getUser(username) {
   }
 }
 
-export function setThemeColor() {
-  
+export function setThemeColor(color) {
+  console.log(`setting theme color to ${color}`);
+  return {
+    type: actions.SET_THEME_COLOR,
+    payload: color
+  }
 }

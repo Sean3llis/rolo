@@ -3,6 +3,7 @@ export const UNAUTH_USER = 'UNAUTH_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const SET_THEME_COLOR = 'SET_THEME_COLOR';
 
 export const FETCH_MESSAGE = 'FETCH_MESSAGE'
 

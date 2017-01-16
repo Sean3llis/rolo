@@ -84,21 +84,32 @@ class ResumeEditor extends Component {
   handleFormSubmit(formData) {
     this.props.updateUser(formData, this.props.currentUser._id);
     localStorage.setItem('CURRENT_USER', JSON.stringify(formData));
-    browserHistory.push(`/${this.props.currentUser.username}/edit`);
-    console.log('browserHistory ~~>', browserHistory);
+    browserHistory.push('/');
+  }
+
+  renderColorPicker() {
+    if (this.props.themeColor) {
+      return (
+        <fieldset>
+          <Label htmlFor="color">Theme Color</Label>
+          <Field name="color" initialColor={this.props.themeColor} component={ColorPicker} />
+        </fieldset>
+      );
+    } else {
+      return null;
+    }
   }
 
   render() {
     if (!this.props.currentUser) return null;
     const { handleSubmit, pristine, submitting, reset, submit } = this.props;
-    const currentColor = this.props.form || this.props.currentUser.color;
     return (
       <div id="editor">
       <div id="editor-row" className="row">
       <div className="col-sm-4" style={styling.formArea}>
         <div style={styling.titleBar}>
           <i className="fa fa-pencil-square-o"></i> EDIT PROFILE
-          <Submit color={this.props.currentUser.color} onClick={handleSubmit(this.handleFormSubmit.bind(this))} disabled={pristine || submitting}>Save</Submit>
+          <Submit color={this.props.themeColor} onClick={handleSubmit(this.handleFormSubmit.bind(this))} disabled={pristine || submitting}>Save</Submit>
         </div>
         <div className="form-inner" style={styling.formInner}>
         <form id="editor" style={styling.form}>
@@ -124,22 +135,19 @@ class ResumeEditor extends Component {
           </fieldset>
 
           <fieldset>
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="contacts">Contacts</Label>
             {contactFields.map((contact, i) => (
               <Field
                 key={i}
                 name={contact.name}
                 icon={contact.icon}
-                color={this.props.currentUser.color}
+                color={this.props.themeColor}
                 placeHolder={contact.placeHolder}
                 component={ContactInput} />
             ))}
           </fieldset>
 
-          <fieldset>
-            <Label htmlFor="color">Theme Color</Label>
-            <Field name="color" initialColor={this.props.currentUser.color} component={ColorPicker} />
-          </fieldset>
+          {this.renderColorPicker()}
 
           <fieldset>
             <AuthError error={this.props.errorMessage} />
@@ -169,7 +177,8 @@ function mapStateToProps(state = {}) {
   let newState = {
     message: state.auth.message,
     currentUser: state.auth.currentUser,
-    initialValues: {...userDefaults, ...state.auth.currentUser}
+    initialValues: {...userDefaults, ...state.auth.currentUser},
+    themeColor: state.resume.themeColor
   };
   if (state.form && state.form.editor) newState.formData = state.form.editor.values;
   return newState;
