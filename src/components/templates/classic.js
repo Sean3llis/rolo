@@ -7,8 +7,8 @@ const styling = {
   },
   blurb: {
     padding: '20px 0px',
-    borderTop: STYLES.BORDER_SHADOW,
-    borderBottom: STYLES.BORDER_SHADOW,
+    borderTop: STYLES.BORDER,
+    borderBottom: STYLES.BORDER,
   },
   nameplate: {
     backgroundColor: STYLES.PRIMARY,
@@ -63,7 +63,7 @@ const styling = {
     margin: '40px 0px'
   },
   projectBorder: {
-    backgroundColor: STYLES.SHADOW,
+    backgroundColor: STYLES.BORDER,
     position: 'absolute',
     height: '100%',
     width: 2,
