@@ -3,6 +3,10 @@ import { browserHistory } from 'react-router';
 import * as firebase from 'firebase';
 import * as actions from './types';
 
+import Resume from '../models/resume-model.js';
+console.log('Resume ~~>', Resume);
+window.Resume = Resume
+
 const ROOT_URL = 'http://localhost:3090';
 const CURRENT_USER = 'CURRENT_USER';
 const TOKEN = 'TOKEN';
@@ -54,8 +58,11 @@ export function signUpUser({ email, password }) {
   //     });
   // }
   return function(dispatch) {
+
     firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(user => {
+      const db = firebase.database().ref(`users/${user.uid}`);
+      db.set(new Resume(email));
       console.log('resolved with user:', user);
       dispatch({
         type: actions.AUTH_USER,
@@ -110,16 +117,15 @@ export function setTemplate(templateName) {
 
 export function authenticateUser() {
   return function(dispatch) {
-    axios.get(ROOT_URL, {
-      headers: { authorization: localStorage.getItem(TOKEN)}
-    })
-    .then(response => {
-      if (response.data && response.data.color) dispatch(setThemeColor(response.data.color));
+    const currentUser = firebase.auth().currentUser;
+    if (currentUser) {
       dispatch({
         type: actions.AUTH_USER,
-        payload: response.data
+        payload: currentUser
       });
-    });
+    } else {
+      console.log('not logged in');
+    }
   }
 }
 

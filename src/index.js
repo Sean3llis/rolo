@@ -48,6 +48,7 @@ const firebaseConfig = {
  messagingSenderId: "833209502391"
 };
 firebase.initializeApp(firebaseConfig);
+window.firebase = firebase;
 
 console.log('firebase ~~>', firebase);
 ReactDOM.render(
