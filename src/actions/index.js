@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import * as actions from './types'
+import * as firebase from 'firebase';
+import * as actions from './types';
 
 const ROOT_URL = 'http://localhost:3090';
 const CURRENT_USER = 'CURRENT_USER';
@@ -36,22 +37,41 @@ export function signInUser({ username, password }) {
   }
 }
 
-export function signUpUser({ username, password }) {
+export function signUpUser({ email, password }) {
+  // return function(dispatch) {
+  //   axios.post(`${ROOT_URL}/signup`, {username, password})
+  //     .then(response => {
+  //       const user = response.data.user;
+  //       dispatch({ type: actions.AUTH_USER, payload: user });
+  //       saveLocalUser(response.data.token, user)
+  //       browserHistory.push(`/${user.username}/edit`);
+  //     })
+  //     .catch(error => {
+  //       dispatch({
+  //         type: actions.AUTH_ERROR,
+  //         payload: error.response.data.error
+  //       });
+  //     });
+  // }
   return function(dispatch) {
-    axios.post(`${ROOT_URL}/signup`, {username, password})
-      .then(response => {
-        const user = response.data.user;
-        dispatch({ type: actions.AUTH_USER, payload: user });
-        saveLocalUser(response.data.token, user)
-        browserHistory.push(`/${user.username}/edit`);
-      })
-      .catch(error => {
-        dispatch({
-          type: actions.AUTH_ERROR,
-          payload: error.response.data.error
-        });
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(user => {
+      console.log('resolved with user:', user);
+      dispatch({
+        type: actions.AUTH_USER,
+        payload: user
       });
+      browserHistory.push(`/${user.uid}`);
+    })
+    .catch(function(error) {
+      console.log('error ~~>', error);
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+    });
   }
+
 }
 
 export function signOutUser() {

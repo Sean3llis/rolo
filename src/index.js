@@ -5,6 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import thunk from 'redux-thunk';
 import axios from 'axios';
+import * as firebase from 'firebase';
 
 import { AUTH_USER } from './actions/types';
 import reducer from './reducers';
@@ -36,6 +37,19 @@ if (token && currentUser) {
   })
 }
 
+/**
+ * FIREBASE SETUP
+ */
+const firebaseConfig = {
+ apiKey: "AIzaSyCWPwoNMVDsf24lVLNqadOErJBcH9jzt90",
+ authDomain: "rolo-5f784.firebaseapp.com",
+ databaseURL: "https://rolo-5f784.firebaseio.com",
+ storageBucket: "rolo-5f784.appspot.com",
+ messagingSenderId: "833209502391"
+};
+firebase.initializeApp(firebaseConfig);
+
+console.log('firebase ~~>', firebase);
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>

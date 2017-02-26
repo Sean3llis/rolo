@@ -8,6 +8,7 @@ import AuthError from './error';
 
 class SignUp extends Component {
   localSubmit(formProps) {
+    console.log('formProps ~~>', formProps);
     this.props.signUpUser(formProps);
   }
 
@@ -29,8 +30,8 @@ class SignUp extends Component {
       <div id="signup" className="contain">
       <form onSubmit={handleSubmit(this.localSubmit.bind(this))}>
         <fieldset className="form-group">
-          <label htmlFor="signup">Username:</label>
-          <Field name="username" component={this.renderInput} type="text"/>
+          <label htmlFor="signup">Email:</label>
+          <Field name="email" component={this.renderInput} type="text"/>
         </fieldset>
 
         <fieldset className="form-group">
@@ -68,6 +69,6 @@ function validate(formProps) {
 
 module.exports = reduxForm({
   form: 'signup',
-  fields: ['username', 'password', 'passwordConfirm'],
+  fields: ['email', 'password', 'passwordConfirm'],
   validate: validate
 })(connect(mapStateToProps, actions)(SignUp));
