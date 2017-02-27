@@ -5,6 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import thunk from 'redux-thunk';
 import axios from 'axios';
+import * as firebase from 'firebase';
 
 import { AUTH_USER } from './actions/types';
 import reducer from './reducers';
@@ -27,14 +28,35 @@ import Editor from './components/editor';
  */
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducer);
-const token = localStorage.getItem('TOKEN');
-const currentUser = localStorage.getItem('CURRENT_USER');
-if (token && currentUser) {
-  store.dispatch({
-    type: AUTH_USER,
-    payload: JSON.parse(currentUser)
-  })
-}
+// const token = localStorage.getItem('TOKEN');
+// const currentUser = localStorage.getItem('CURRENT_USER');
+// if (token && currentUser) {
+//   store.dispatch({
+//     type: AUTH_USER,
+//     payload: JSON.parse(currentUser)
+//   })
+// }
+
+/**
+ * FIREBASE SETUP
+ */
+const firebaseConfig = {
+ apiKey: "AIzaSyCWPwoNMVDsf24lVLNqadOErJBcH9jzt90",
+ authDomain: "rolo-5f784.firebaseapp.com",
+ databaseURL: "https://rolo-5f784.firebaseio.com",
+ storageBucket: "rolo-5f784.appspot.com",
+ messagingSenderId: "833209502391"
+};
+firebase.initializeApp(firebaseConfig);
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    store.dispatch({
+      type: AUTH_USER,
+      payload: user
+    })
+  }
+});
+window.firebase = firebase;
 
 ReactDOM.render(
   <Provider store={store}>
@@ -45,8 +67,8 @@ ReactDOM.render(
         <Route path="signup" component={SignUp}></Route>
         <Route path="signout" component={SignOut}></Route>
         <Route path="templates" component={AuthWall(TemplateChooser)}></Route>
-        <Route path=":username" component={Resume}></Route>
-        <Route path=":username/edit" component={AuthWall(Editor)}></Route>
+        <Route path=":uid" component={Resume}></Route>
+        <Route path=":uid/edit" component={AuthWall(Editor)}></Route>
       </Route>
     </Router>
   </Provider>

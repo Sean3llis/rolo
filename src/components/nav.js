@@ -76,12 +76,12 @@ class Header extends Component {
   }
 
   authNav() {
-    const username = this.props.currentUser.username;
+    const uid = this.props.currentUser.uid;
     return (
       <div className="navbar contain">
         <HomeLink color={this.props.themeColor}>ROLO</HomeLink>
-        <NavLink to={`/${username}`} icon="address-card" label="VIEW" color={this.props.themeColor}/>
-        <NavLink to={`/${username}/edit`} icon="pencil" label="Edit" color={this.props.themeColor}/>
+        <NavLink to={`/${uid}`} icon="address-card" label="VIEW" color={this.props.themeColor}/>
+        <NavLink to={`/${uid}/edit`} icon="pencil" label="Edit" color={this.props.themeColor}/>
         <NavLink to="/templates" icon="paint-brush" label="Templates" color={this.props.themeColor}/>
         <NavLink to="/signout" icon="user-times" label="Log Out" color={this.props.themeColor}/>
       </div>

@@ -7,8 +7,8 @@ const styling = {
   },
   blurb: {
     padding: '20px 0px',
-    borderTop: STYLES.BORDER_SHADOW,
-    borderBottom: STYLES.BORDER_SHADOW,
+    borderTop: STYLES.BORDER,
+    borderBottom: STYLES.BORDER,
   },
   nameplate: {
     backgroundColor: STYLES.PRIMARY,
@@ -63,7 +63,7 @@ const styling = {
     margin: '40px 0px'
   },
   projectBorder: {
-    backgroundColor: STYLES.SHADOW,
+    backgroundColor: STYLES.BORDER,
     position: 'absolute',
     height: '100%',
     width: 2,
@@ -134,6 +134,7 @@ class ClassicTemplate extends Component {
   }
 
   render() {
+    console.log('this.props.data ~~>', this.props.data);
     if (!this.props.data) return null;
     const { name, title, blurb, contacts, skills, projects } = this.props.data;
     return (

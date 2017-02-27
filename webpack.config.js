@@ -15,6 +15,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
+        exclude: /node_modules/,
         query: {
           presets: ['es2015', 'stage-0', 'react']
         }
@@ -39,6 +40,7 @@ module.exports = {
     historyApiFallback: true,
     contentBase: path.join(__dirname, 'public'),
     port: 4000,
+    host: '0.0.0.0',
     progress: true
   },
 };

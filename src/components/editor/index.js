@@ -81,6 +81,12 @@ const styling = {
 };
 
 class ResumeEditor extends Component {
+  componentWillMount() {
+    if (!this.props.themeColor) {
+      this.props.setThemeColor('#2aa079');
+    }
+  }
+
   handleFormSubmit(formData) {
     this.props.updateUser(formData, this.props.currentUser._id);
     localStorage.setItem('CURRENT_USER', JSON.stringify(formData));

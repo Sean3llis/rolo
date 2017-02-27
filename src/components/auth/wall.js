@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import * as firebase from 'firebase';
+
 
 export default function(ComposedComponent) {
   class Authentication extends Component {
@@ -21,6 +23,10 @@ export default function(ComposedComponent) {
       return <ComposedComponent {...this.props} />
     }
   }
+
+  Authentication.contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
   function mapStateToProps(state) {
     return { authenticated: state.auth.authenticated };

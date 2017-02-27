@@ -23,79 +23,38 @@ const styling = {
     position: 'absolute',
     width: 'auto',
     top: 0,
-    left: 0,
+    right: -20,
     fontSize: 12,
     lineHeight: '20px',
     padding: 0,
     height: 20,
     width: 20,
     borderRadius: 0,
-    backgroundColor: STYLES.DANGER,
-    color: STYLES.OFF_WHITE,
+    color: STYLES.MEDIUM_GRAY,
   },
   counter: {
     position: 'absolute',
-    top: 20,
-    color: STYLES.OFF_WHITE,
-    backgroundColor: STYLES.DARK_GRAY,
-    textAlign: 'center'
+    color: STYLES.LIGHT_MEDIUM_GRAY,
+    backgroundColor: STYLES.MEDIUM_GRAY,
+    textAlign: 'center',
+    textIndent: 0,
+    left: -20,
+    width: 20,
+    top: 0,
+    height: 38,
+    lineHeight: '38px'
   },
   panel: {
     backgroundColor: STYLES.DARK_GRAY,
     color: STYLES.OFF_WHITE,
-    padding: 0
+    padding: 0,
+    position: 'relative',
+  },
+  panelHeader: {
+    display: 'inline-block',
+    color: STYLES.OFF_WHITE
   }
 };
-
-// export default ({ fields, meta: { touched, error } }) => (
-  // <div>
-  //   <button style={styling.add} type="button" onClick={() => fields.push({})}>
-  //     <i className="fa fa-plus"></i>
-  //   </button>
-  //
-  //   {touched && error && <span>{error}</span>}
-  //   {fields.map((project, i) => (
-  //     <Collapse onChange={onChange} accordion={false} key={i}>
-  //     <Panel header="lfdsjklfjsdlkf"><p>lskdajfslkdjflkfjskldj</p></Panel>
-  //     <div className="project" style={styling.project}>
-  //       <div className="counter" style={{...styling.delete, ...styling.counter}}>{i + 1}</div>
-  //       <button
-  //         type="button"
-  //         title="Remove Member"
-  //         style={styling.delete}
-  //         onClick={() => fields.remove(i)}>
-  //         <i className="fa fa-times"></i>
-  //       </button>
-  //
-  //       <fieldset>
-  //         <Label style={styling.projectLabel}>Title</Label>
-  //         <Field
-  //           name={`${project}.title`}
-  //           type="text"
-  //           component={TextInput} />
-  //       </fieldset>
-  //
-  //       <fieldset>
-  //         <Label style={styling.projectLabel}>Link</Label>
-  //         <Field
-  //           name={`${project}.link`}
-  //           type="text"
-  //           component={TextInput} />
-  //       </fieldset>
-  //
-  //       <fieldset>
-  //         <Label style={styling.projectLabel}>Description</Label>
-  //         <Field
-  //             name={`${project}.description`}
-  //             type="textarea"
-  //             component={TextAreaInput}/>
-  //       </fieldset>
-  //     </div>
-  //     </Collapse>
-  //   ))}
-  // </div>
-// );
-
 
 export default class Projects extends Component {
   constructor(props) {
@@ -113,18 +72,22 @@ export default class Projects extends Component {
   project(project, i, c) {
     const fields = c.getAll();
     const currentField = fields[i];
+    const header = (
+      <div style={styling.panelHeader}>
+        {currentField.title}
+        <div className="counter" style={styling.counter}>{i + 1}</div>
+      </div>
+    );
     return (
-      <Panel key={i} header={currentField.title} style={styling.panel}>
+      <Panel key={i} header={header} style={styling.panel}>
       <div className="project" style={styling.project}>
-        <div className="counter" style={{...styling.delete, ...styling.counter}}>{i + 1}</div>
         <button
           type="button"
           title="Remove Member"
           style={styling.delete}
-          onClick={() => fields.remove(i)}>
+          onClick={() => {console.log('click'); fields.remove(i)}}>
           <i className="fa fa-times"></i>
         </button>
-
         <fieldset>
           <Label style={styling.projectLabel}>Title</Label>
           <Field
