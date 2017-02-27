@@ -129,22 +129,25 @@ export function setTemplate(templateName) {
 }
 
 export function authenticateUser() {
-  console.log('auth user');
   return function(dispatch) {
     const currentUser = firebase.auth().currentUser;
     if (currentUser) {
-      dispatch({
-        type: actions.AUTH_USER,
-        payload: currentUser
-      });
+      firebase.database().ref(`users/${currentUser.uid}`).once('value')
+      .then(snapshot => {
+        console.log('snapshot.val() ~~>', snapshot.val());
+        dispatch({
+          type: actions.AUTH_USER,
+          payload: {...currentUser, ...snapshot.val()}
+        });
+      })
+
     } else {
       console.log('not logged in');
     }
   }
 }
 
-export function getUser(uid) {
-  console.log('getting user:', uid);
+export function getUserProfile(uid) {
   return function(dispatch) {
     // axios.get(`${ROOT_URL}/${username}`)
     // .then(response => {
@@ -158,7 +161,7 @@ export function getUser(uid) {
     // })
     firebase.database().ref(`users/${uid}`).once('value')
     .then(snapshot => {
-      console.log('snapshot ~~>', snapshot);
+      console.log('snapshot ~~>', snapshot.val);
       const userData = snapshot.val();
       console.log('userData ~~>', userData);
         dispatch({

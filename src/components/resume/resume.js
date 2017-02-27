@@ -21,6 +21,7 @@ const styling = {
 }
 
 function Template(props) {
+  console.log('props.viewingUser ~~>', props.viewingUser);
   return (props.viewingUser)
     ? <Classic viewingUser={props.viewingUser} data={resumeData}/>
     : null;
@@ -28,7 +29,7 @@ function Template(props) {
 
 class Resume extends Component {
   componentWillMount() {
-    this.props.getUser(this.props.params.uid);
+    this.props.getUserProfile(this.props.params.uid);
   }
 
   render() {
@@ -45,7 +46,7 @@ class Resume extends Component {
 
 function mapStateToProps(state = {}, ownProps) {
   return {
-    viewingUser: state.auth.viewingUser,
+    currentUser: state.auth.currentUser,
   };
 }
 

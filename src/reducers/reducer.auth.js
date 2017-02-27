@@ -3,6 +3,7 @@ import * as actions from '../actions/types';
 export default function(state = {}, action) {
   switch (action.type) {
     case actions.AUTH_USER:
+    console.log('action.payload ~~>', action.payload);
       return { ...state, errorMessage: '', authenticated: true, currentUser: action.payload };
     case actions.UNAUTH_USER:
       return { ...state, errorMessage: '', authenticated: false, currentUser: false };

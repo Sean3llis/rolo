@@ -7,8 +7,6 @@ const styling = {
   },
   blurb: {
     padding: '20px 0px',
-    borderTop: STYLES.BORDER,
-    borderBottom: STYLES.BORDER,
   },
   nameplate: {
     backgroundColor: STYLES.PRIMARY,

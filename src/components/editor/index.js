@@ -190,7 +190,7 @@ function mapStateToProps(state = {}) {
   let newState = {
     message: state.auth.message,
     currentUser: state.auth.currentUser,
-    initialValues: {...userDefaults, ...state.auth.currentUser},
+    initialValues: {...userDefaults, ...state.auth.viewingUser},
     themeColor: state.resume.themeColor
   };
   if (state.form && state.form.editor) newState.formData = state.form.editor.values;
