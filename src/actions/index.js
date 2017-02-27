@@ -21,23 +21,37 @@ function clearLocalUser() {
   localStorage.setItem(CURRENT_USER, null);
 }
 
-export function signInUser({ username, password }) {
+export function signInUser({ email, password }) {
   return function(dispatch) {
-    axios.post(`${ROOT_URL}/signin`, { username, password })
-      .then(response => {
-        const user = response.data.user;
-        delete user.password;
-        dispatch({ type: actions.AUTH_USER, payload: user });
-        saveLocalUser(response.data.token, user);
-        console.log('response.data.token ~~>', response.data.token);
-        browserHistory.push(`/${user.username}`);
-      })
-      .catch(error => {
-        dispatch({
-          type: actions.AUTH_ERROR,
-          payload: error
-        });
+    // axios.post(`${ROOT_URL}/signin`, { username, password })
+    //   .then(response => {
+    //     const user = response.data.user;
+    //     delete user.password;
+    //     dispatch({ type: actions.AUTH_USER, payload: user });
+    //     saveLocalUser(response.data.token, user);
+    //     console.log('response.data.token ~~>', response.data.token);
+    //     browserHistory.push(`/${user.username}`);
+    //   })
+    //   .catch(error => {
+    //     dispatch({
+    //       type: actions.AUTH_ERROR,
+    //       payload: error
+    //     });
+    //   });
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(user => {
+      dispatch({
+        type: actions.AUTH_USER,
+        payload: user
       });
+      browserHistory.push(`/${user.uid}`);
+    })
+    .catch(error => {
+      dispatch({
+        type: actions.AUTH_ERROR,
+        payload: error
+      });
+    })
   }
 }
 

@@ -28,14 +28,14 @@ import Editor from './components/editor';
  */
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducer);
-const token = localStorage.getItem('TOKEN');
-const currentUser = localStorage.getItem('CURRENT_USER');
-if (token && currentUser) {
-  store.dispatch({
-    type: AUTH_USER,
-    payload: JSON.parse(currentUser)
-  })
-}
+// const token = localStorage.getItem('TOKEN');
+// const currentUser = localStorage.getItem('CURRENT_USER');
+// if (token && currentUser) {
+//   store.dispatch({
+//     type: AUTH_USER,
+//     payload: JSON.parse(currentUser)
+//   })
+// }
 
 /**
  * FIREBASE SETUP
@@ -48,9 +48,16 @@ const firebaseConfig = {
  messagingSenderId: "833209502391"
 };
 firebase.initializeApp(firebaseConfig);
+const currentUser = firebase.auth().currentUser;
+if (currentUser) {
+  store.dispatch({
+    type: AUTH_USER,
+    payload: currentUser
+  });
+}
+console.log('currentUser ~~>', currentUser);
 window.firebase = firebase;
 
-console.log('firebase ~~>', firebase);
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
