@@ -28,7 +28,7 @@ function Template(props) {
 
 class Resume extends Component {
   componentWillMount() {
-    this.props.getUser(this.props.params.username);
+    this.props.getUser(this.props.params.uid);
   }
 
   render() {

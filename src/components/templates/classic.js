@@ -134,6 +134,7 @@ class ClassicTemplate extends Component {
   }
 
   render() {
+    console.log('this.props.data ~~>', this.props.data);
     if (!this.props.data) return null;
     const { name, title, blurb, contacts, skills, projects } = this.props.data;
     return (

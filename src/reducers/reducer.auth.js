@@ -10,6 +10,8 @@ export default function(state = {}, action) {
       return { ...state, errorMessage: action.payload }
     case actions.UPDATE_USER:
       return { ...state }
+    case actions.RECEIVE_USER:
+      return { ...state, viewingUser: action.payload }
   }
   return state;
 }

@@ -24,6 +24,10 @@ export default function(ComposedComponent) {
     }
   }
 
+  Authentication.contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+
   function mapStateToProps(state) {
     return { authenticated: state.auth.authenticated };
   }

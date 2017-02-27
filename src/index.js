@@ -48,14 +48,14 @@ const firebaseConfig = {
  messagingSenderId: "833209502391"
 };
 firebase.initializeApp(firebaseConfig);
-const currentUser = firebase.auth().currentUser;
-if (currentUser) {
-  store.dispatch({
-    type: AUTH_USER,
-    payload: currentUser
-  });
-}
-console.log('currentUser ~~>', currentUser);
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    store.dispatch({
+      type: AUTH_USER,
+      payload: user
+    })
+  }
+});
 window.firebase = firebase;
 
 ReactDOM.render(
@@ -67,8 +67,8 @@ ReactDOM.render(
         <Route path="signup" component={SignUp}></Route>
         <Route path="signout" component={SignOut}></Route>
         <Route path="templates" component={AuthWall(TemplateChooser)}></Route>
-        <Route path=":username" component={Resume}></Route>
-        <Route path=":username/edit" component={AuthWall(Editor)}></Route>
+        <Route path=":uid" component={Resume}></Route>
+        <Route path=":uid/edit" component={AuthWall(Editor)}></Route>
       </Route>
     </Router>
   </Provider>

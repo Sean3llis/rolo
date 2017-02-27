@@ -77,7 +77,6 @@ export function signUpUser({ email, password }) {
     .then(user => {
       const db = firebase.database().ref(`users/${user.uid}`);
       db.set(new Resume(email));
-      console.log('resolved with user:', user);
       dispatch({
         type: actions.AUTH_USER,
         payload: user
@@ -130,6 +129,7 @@ export function setTemplate(templateName) {
 }
 
 export function authenticateUser() {
+  console.log('auth user');
   return function(dispatch) {
     const currentUser = firebase.auth().currentUser;
     if (currentUser) {
@@ -143,17 +143,28 @@ export function authenticateUser() {
   }
 }
 
-export function getUser(username) {
+export function getUser(uid) {
+  console.log('getting user:', uid);
   return function(dispatch) {
-    axios.get(`${ROOT_URL}/${username}`)
-    .then(response => {
-      dispatch({
-        type: actions.RECEIVE_USER,
-        payload: response.data.user
-      });
-    })
-    .catch(err => {
-      // @TODO redirect to 404 with err message
+    // axios.get(`${ROOT_URL}/${username}`)
+    // .then(response => {
+    //   dispatch({
+    //     type: actions.RECEIVE_USER,
+    //     payload: response.data.user
+    //   });
+    // })
+    // .catch(err => {
+    //   // @TODO redirect to 404 with err message
+    // })
+    firebase.database().ref(`users/${uid}`).once('value')
+    .then(snapshot => {
+      console.log('snapshot ~~>', snapshot);
+      const userData = snapshot.val();
+      console.log('userData ~~>', userData);
+        dispatch({
+          type: actions.RECEIVE_USER,
+          payload: userData
+        });
     })
   }
 }
