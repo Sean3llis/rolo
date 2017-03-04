@@ -28,14 +28,6 @@ import Editor from './components/editor';
  */
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducer);
-// const token = localStorage.getItem('TOKEN');
-// const currentUser = localStorage.getItem('CURRENT_USER');
-// if (token && currentUser) {
-//   store.dispatch({
-//     type: AUTH_USER,
-//     payload: JSON.parse(currentUser)
-//   })
-// }
 
 /**
  * FIREBASE SETUP

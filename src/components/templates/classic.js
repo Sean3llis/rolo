@@ -91,6 +91,7 @@ class ClassicTemplate extends Component {
 
   stampProjects(projects) {
     const projectNodes = [];
+    if (!projects) return null;
     for (var i = 0; i < projects.length; i++) {
       let currentProject = projects[i];
       let title = (!currentProject.link)
@@ -121,6 +122,7 @@ class ClassicTemplate extends Component {
     const contactNodes = [];
     for (var i = 0; i < contacts.length; i++) {
       let currentContact = contacts[i];
+      if (!currentContact.value) continue;
       contactNodes.push(
         <span style={{...styling.contactNode, backgroundColor: this.props.data.color}} key={i}>
           <i className={classNames('fa', `fa-${currentContact.icon}`)} style={styling.contactIcon}></i>

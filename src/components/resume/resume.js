@@ -21,7 +21,6 @@ const styling = {
 }
 
 function Template(props) {
-  console.log('props.viewingUser ~~>', props.viewingUser);
   return (props.viewingUser)
     ? <Classic viewingUser={props.viewingUser} data={resumeData}/>
     : null;
@@ -33,11 +32,10 @@ class Resume extends Component {
   }
 
   render() {
-    console.log('this.props.viewingUser ~~>', this.props.viewingUser);
     return (
       <div style={{postion: 'relative'}}>
-        {this.props.viewingUser &&
-          <Classic data={this.props.viewingUser}/>
+        {this.props.currentUser &&
+          <Classic data={this.props.currentUser}/>
         }
       </div>
     );

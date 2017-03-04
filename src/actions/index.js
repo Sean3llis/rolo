@@ -4,7 +4,6 @@ import * as firebase from 'firebase';
 import * as actions from './types';
 
 import Resume from '../models/resume-model.js';
-console.log('Resume ~~>', Resume);
 window.Resume = Resume
 
 const ROOT_URL = 'http://localhost:3090';
@@ -103,22 +102,30 @@ export function signOutUser() {
 }
 
 
-export function updateUser(data, userID) {
+export function updateUser(data, uid) {
   return function(dispatch) {
-    axios.patch(`${ROOT_URL}/users/${userID}`, { data }, {
-      headers: { Authorization: localStorage.getItem(TOKEN)},
-    })
-    .then(response => {
-      return {
-        type: actions.UPDATE_USER,
-        payload: response
-      }
-    })
-    .catch(err => {
-      console.warn(err)
+    const { name, blurb, projects, themeColor, title, contacts } = data;
+    firebase.database().ref(`users/${uid}`).set({
+      name,
+      blurb,
+      projects,
+      themeColor,
+      title,
+      contacts
     });
+    // axios.patch(`${ROOT_URL}/users/${userID}`, { data }, {
+    //   headers: { Authorization: localStorage.getItem(TOKEN)},
+    // })
+    // .then(response => {
+    //   return {
+    //     type: actions.UPDATE_USER,
+    //     payload: response
+    //   }
+    // })
+    // .catch(err => {
+    //   console.warn(err)
+    // });
   }
-
 }
 
 export function setTemplate(templateName) {
@@ -129,12 +136,12 @@ export function setTemplate(templateName) {
 }
 
 export function authenticateUser() {
+  console.log('authenticate user');
   return function(dispatch) {
     const currentUser = firebase.auth().currentUser;
     if (currentUser) {
       firebase.database().ref(`users/${currentUser.uid}`).once('value')
       .then(snapshot => {
-        console.log('snapshot.val() ~~>', snapshot.val());
         dispatch({
           type: actions.AUTH_USER,
           payload: {...currentUser, ...snapshot.val()}
@@ -161,9 +168,7 @@ export function getUserProfile(uid) {
     // })
     firebase.database().ref(`users/${uid}`).once('value')
     .then(snapshot => {
-      console.log('snapshot ~~>', snapshot.val);
       const userData = snapshot.val();
-      console.log('userData ~~>', userData);
         dispatch({
           type: actions.RECEIVE_USER,
           payload: userData

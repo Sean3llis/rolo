@@ -89,7 +89,6 @@ class ResumeEditor extends Component {
 
   handleFormSubmit(formData) {
     this.props.updateUser(formData, this.props.currentUser._id);
-    localStorage.setItem('CURRENT_USER', JSON.stringify(formData));
     browserHistory.push('/');
   }
 
@@ -178,7 +177,7 @@ class ResumeEditor extends Component {
         </div>
         <div className="col-sm-8" style={styling.previewArea}>
         <div style={styling.titleBar}><i className="fa fa-eye"></i> PREVIEW PROFILE</div>
-          <Classic viewingUser={this.props.currentUser} data={this.props.formData} />
+          <Classic data={this.props.formData} />
         </div>
       </div>
       </div>
@@ -190,10 +189,12 @@ function mapStateToProps(state = {}) {
   let newState = {
     message: state.auth.message,
     currentUser: state.auth.currentUser,
-    initialValues: {...userDefaults, ...state.auth.viewingUser},
-    themeColor: state.resume.themeColor
+    initialValues: {...userDefaults, ...state.auth.currentUser},
+    themeColor: state.resume.themeColor,
   };
-  if (state.form && state.form.editor) newState.formData = state.form.editor.values;
+  if (state.form && state.form.editor && state.form.editor.values) {
+    newState.formData = state.form.editor.values;
+  }
   return newState;
 }
 
