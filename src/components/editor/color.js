@@ -27,19 +27,25 @@ class ColorPicker extends React.Component {
     super(props);
     this.handleChangeComplete = this.handleChangeComplete.bind(this);
     this.state = {
-      color: props.initialColor
+      color: props.color
     };
   };
+
+  componentDidMount() {
+    console.log('mounted with: ', this.state.color);
+    // this.props.setThemeColor(this.state.color);
+  }
 
   handleChangeComplete(payload) {
     const color = payload.hex;
     this.props.input.onChange(color);
     this.setState({color});
+    console.log('handle change: ', color);
     this.props.setThemeColor(color);
   };
 
   render() {
-    if (!this.props.themeColor) return null;
+    if (!this.props.color) return null;
     return (
       <div>
       <input type="hidden" {...this.props.input} />
@@ -56,8 +62,9 @@ class ColorPicker extends React.Component {
 }
 
 function mapStateToProps(state = {}) {
+  console.log('state.auth.currentUser.color ~~>', state.auth.currentUser.color);
   return {
-    themeColor: state.resume.themeColor
+    color: state.auth.currentUser.color
   }
 }
 

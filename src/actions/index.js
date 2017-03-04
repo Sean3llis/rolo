@@ -104,12 +104,13 @@ export function signOutUser() {
 
 export function updateUser(data, uid) {
   return function(dispatch) {
-    const { name, blurb, projects, themeColor, title, contacts } = data;
+    const { name, blurb, projects, color, title, contacts } = data;
+    console.log('color ~~>', color);
     firebase.database().ref(`users/${uid}`).set({
       name,
       blurb,
       projects,
-      themeColor,
+      color,
       title,
       contacts
     });
@@ -147,7 +148,6 @@ export function authenticateUser() {
           payload: {...currentUser, ...snapshot.val()}
         });
       })
-
     } else {
       console.log('not logged in');
     }
@@ -178,7 +178,7 @@ export function getUserProfile(uid) {
 }
 
 export function setThemeColor(color) {
-  console.log(`setting theme color to ${color}`);
+  console.log(`action: setting theme color to ${color}`);
   return {
     type: actions.SET_THEME_COLOR,
     payload: color

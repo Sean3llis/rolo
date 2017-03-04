@@ -81,31 +81,25 @@ const styling = {
 };
 
 class ResumeEditor extends Component {
-  componentWillMount() {
-    if (!this.props.themeColor) {
-      this.props.setThemeColor('#2aa079');
-    }
-  }
 
   handleFormSubmit(formData) {
-    this.props.updateUser(formData, this.props.currentUser._id);
-    browserHistory.push('/');
+    const currentUserID = this.props.currentUser.uid;
+    this.props.updateUser(formData, currentUserID);
+    browserHistory.push(`/${currentUserID}`);
   }
 
   renderColorPicker() {
-    if (this.props.themeColor) {
-      return (
-        <fieldset>
-          <Label htmlFor="color">Theme Color</Label>
-          <Field name="color" initialColor={this.props.themeColor} component={ColorPicker} />
-        </fieldset>
-      );
-    } else {
-      return null;
-    }
+    if (!this.props.color) return null;
+    return (
+      <fieldset>
+        <Label htmlFor="color">Theme Color</Label>
+        <Field name="color" component={ColorPicker} />
+      </fieldset>
+    );
   }
 
   render() {
+    console.log('this.props.color ~~>', this.props.color);
     if (!this.props.currentUser) return null;
     const { handleSubmit, pristine, submitting, reset, submit } = this.props;
     return (
@@ -114,7 +108,7 @@ class ResumeEditor extends Component {
       <div className="col-sm-4" style={styling.formArea}>
         <div style={styling.titleBar}>
           <i className="fa fa-pencil-square-o"></i> EDIT PROFILE
-          <Submit color={this.props.themeColor} onClick={handleSubmit(this.handleFormSubmit.bind(this))} disabled={pristine || submitting}>Save</Submit>
+          <Submit color={this.props.color} onClick={handleSubmit(this.handleFormSubmit.bind(this))} disabled={pristine || submitting}>Save</Submit>
         </div>
         <div className="form-inner" style={styling.formInner}>
         <form id="editor" style={styling.form}>
@@ -147,7 +141,7 @@ class ResumeEditor extends Component {
                   key={i}
                   name={contact.name}
                   icon={contact.icon}
-                  color={this.props.themeColor}
+                  color={this.props.color}
                   placeHolder={contact.placeHolder}
                   component={ContactInput} />
               )
@@ -166,7 +160,7 @@ class ResumeEditor extends Component {
           </fieldset>
 
           <Submit
-            color={this.props.themeColor}
+            color={this.props.color}
             style={styling.lowerSubmit}
             onClick={handleSubmit(this.handleFormSubmit.bind(this))}
             disabled={pristine || submitting}>
@@ -190,7 +184,7 @@ function mapStateToProps(state = {}) {
     message: state.auth.message,
     currentUser: state.auth.currentUser,
     initialValues: {...userDefaults, ...state.auth.currentUser},
-    themeColor: state.resume.themeColor,
+    color: state.auth.currentUser.color
   };
   if (state.form && state.form.editor && state.form.editor.values) {
     newState.formData = state.form.editor.values;

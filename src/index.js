@@ -40,28 +40,33 @@ const firebaseConfig = {
  messagingSenderId: "833209502391"
 };
 firebase.initializeApp(firebaseConfig);
+console.log('firebase initialized');
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
-    store.dispatch({
+    const test = store.dispatch({
       type: AUTH_USER,
       payload: user
-    })
+    });
   }
+  render();
 });
+
 window.firebase = firebase;
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={App}>
-        <IndexRoute component={Welcome}></IndexRoute>
-        <Route path="signin" component={SignIn}></Route>
-        <Route path="signup" component={SignUp}></Route>
-        <Route path="signout" component={SignOut}></Route>
-        <Route path="templates" component={AuthWall(TemplateChooser)}></Route>
-        <Route path=":uid" component={Resume}></Route>
-        <Route path=":uid/edit" component={AuthWall(Editor)}></Route>
-      </Route>
-    </Router>
-  </Provider>
-, document.getElementById('root'));
+function render() {
+  ReactDOM.render(
+    <Provider store={store}>
+      <Router history={browserHistory}>
+        <Route path="/" component={App}>
+          <IndexRoute component={Welcome}></IndexRoute>
+          <Route path="signin" component={SignIn}></Route>
+          <Route path="signup" component={SignUp}></Route>
+          <Route path="signout" component={SignOut}></Route>
+          <Route path="templates" component={AuthWall(TemplateChooser)}></Route>
+          <Route path=":uid" component={Resume}></Route>
+          <Route path="/edit/:uid" component={AuthWall(Editor)}></Route>
+        </Route>
+      </Router>
+    </Provider>
+  , document.getElementById('root'));
+}

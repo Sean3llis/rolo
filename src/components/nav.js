@@ -56,6 +56,7 @@ const HomeLink = props => {
 
 const NavLink = props => {
   const { to, style, label, icon, color } = props;
+  console.log('color ~~>', color);
   return (
     <Link to={to} style={styling.navItem} activeStyle={{borderRight: `4px solid ${color || STYLES.OFF_WHITE}`}}>
       <div style={styling.navLabel}>{label}</div>
@@ -77,13 +78,14 @@ class Header extends Component {
 
   authNav() {
     const uid = this.props.currentUser.uid;
+    const color = this.props.currentUser.color;
     return (
       <div className="navbar contain">
-        <HomeLink color={this.props.themeColor}>ROLO</HomeLink>
-        <NavLink to={`/${uid}`} icon="address-card" label="VIEW" color={this.props.themeColor}/>
-        <NavLink to={`/${uid}/edit`} icon="pencil" label="Edit" color={this.props.themeColor}/>
-        <NavLink to="/templates" icon="paint-brush" label="Templates" color={this.props.themeColor}/>
-        <NavLink to="/signout" icon="user-times" label="Log Out" color={this.props.themeColor}/>
+        <HomeLink color={this.props.color}>ROLO</HomeLink>
+        <NavLink to={`/${uid}`} icon="address-card" label="VIEW" color={color}/>
+        <NavLink to={`/edit/${uid}`} icon="pencil" label="Edit" color={color}/>
+        <NavLink to="/templates" icon="paint-brush" label="Templates" color={color}/>
+        <NavLink to="/signout" icon="user-times" label="Log Out" color={color}/>
       </div>
     );
   }
@@ -107,7 +109,7 @@ function mapStateToProps(state = {}) {
   return {
     authenticated: state.auth.authenticated,
     currentUser: state.auth.currentUser,
-    themeColor: state.resume.themeColor
+    color: state.auth.currentUser.color
   };
 }
 

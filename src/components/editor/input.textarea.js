@@ -4,7 +4,7 @@ import * as STYLES from '../styles';
 export default (field) => {
   return (
     <div>
-      <textarea rows="10" {...field.input} style={{borderBottom: STYLES.BORDER_SHADOW}} />
+      <textarea rows="5" {...field.input} style={{borderBottom: STYLES.BORDER_SHADOW}} />
     </div>
   )
 };
